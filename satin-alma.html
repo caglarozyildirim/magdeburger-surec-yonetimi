@@ -516,6 +516,7 @@
             <button class="tab" data-tab="evaluation">Değerlendirmede <span style="background: #dbeafe; padding: 2px 8px; border-radius: 10px; margin-left: 4px;">12</span></button>
             <button class="tab" data-tab="approved">Onaylanan</button>
             <button class="tab" data-tab="rejected">Reddedilen</button>
+            <button class="tab" data-tab="suppliers">Tedarikçi Performansı</button>
         </div>
 
         <!-- Table -->
@@ -614,6 +615,194 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- Supplier Performance Analysis Section -->
+        <div id="supplierPerformanceSection" style="display: none; margin-top: 32px;">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3 style="font-size: 18px; font-weight: 700; color: var(--dark);">
+                        Tedarikçi Performans Analizi
+                        <span class="ai-badge" style="margin-left: 8px;">AI Destekli</span>
+                    </h3>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tedarikçi</th>
+                            <th>Toplam İşlem</th>
+                            <th>Başarılı Teslimat</th>
+                            <th>Ortalama Teslimat Süresi</th>
+                            <th>Fiyat Rekabetçiliği</th>
+                            <th>Kalite Skoru</th>
+                            <th>Performans Puanı</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>TechSource A.Ş.</strong></td>
+                            <td>47</td>
+                            <td><span style="color: var(--success); font-weight: 600;">45 (%96)</span></td>
+                            <td>2.3 gün</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 92%; height: 100%; background: var(--success);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">92/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 95%; height: 100%; background: var(--success);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">95/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <strong style="font-size: 18px; color: var(--success);">94.2</strong>
+                                    <span style="color: var(--success); font-size: 12px;">⭐ Mükemmel</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-approved">Onaylı</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>GlobalTech Ltd.</strong></td>
+                            <td>38</td>
+                            <td><span style="color: var(--success); font-weight: 600;">36 (%95)</span></td>
+                            <td>3.1 gün</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 88%; height: 100%; background: var(--success);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">88/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 91%; height: 100%; background: var(--success);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">91/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <strong style="font-size: 18px; color: var(--success);">91.3</strong>
+                                    <span style="color: var(--success); font-size: 12px;">⭐ Mükemmel</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-approved">Onaylı</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>OfficeSupply Pro</strong></td>
+                            <td>52</td>
+                            <td><span style="color: var(--success); font-weight: 600;">48 (%92)</span></td>
+                            <td>1.8 gün</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 85%; height: 100%; background: var(--warning);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">85/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 87%; height: 100%; background: var(--warning);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">87/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <strong style="font-size: 18px; color: var(--warning);">88.1</strong>
+                                    <span style="color: var(--warning); font-size: 12px;">✓ İyi</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-approved">Onaylı</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>BudgetSupplies Inc.</strong></td>
+                            <td>29</td>
+                            <td><span style="color: var(--warning); font-weight: 600;">25 (%86)</span></td>
+                            <td>5.2 gün</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 95%; height: 100%; background: var(--success);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">95/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 78%; height: 100%; background: var(--warning);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">78/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <strong style="font-size: 18px; color: var(--warning);">85.8</strong>
+                                    <span style="color: var(--warning); font-size: 12px;">✓ İyi</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-approved">Onaylı</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>QuickTech Solutions</strong></td>
+                            <td>15</td>
+                            <td><span style="color: var(--danger); font-weight: 600;">11 (%73)</span></td>
+                            <td>7.8 gün</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 82%; height: 100%; background: var(--warning);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">82/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 68%; height: 100%; background: var(--danger);"></div>
+                                    </div>
+                                    <span style="font-size: 12px; color: var(--text-light);">68/100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <strong style="font-size: 18px; color: var(--danger);">74.2</strong>
+                                    <span style="color: var(--danger); font-size: 12px;">⚠ Orta</span>
+                                </div>
+                            </td>
+                            <td><span class="status-badge status-pending">İnceleniyor</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="margin-top: 24px; padding: 20px; background: var(--primary-light); border-radius: 12px; border-left: 4px solid var(--primary);">
+                    <h4 style="font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 12px;">
+                        AI Önerisi
+                    </h4>
+                    <p style="font-size: 14px; color: var(--text); line-height: 1.6; margin-bottom: 12px;">
+                        <strong>TechSource A.Ş.</strong> ve <strong>GlobalTech Ltd.</strong> en yüksek performans skorlarına sahip tedarikçilerdir.
+                        Yazılım ve donanım alımları için bu tedarikçiler tercih edilmelidir.
+                    </p>
+                    <p style="font-size: 14px; color: var(--text); line-height: 1.6;">
+                        <strong style="color: var(--danger);">Uyarı:</strong> QuickTech Solutions'ın performansı ortalamanın altında.
+                        Son 3 işlemde teslimat gecikmeleri ve kalite sorunları tespit edildi. Yeni siparişler için alternatif tedarikçiler değerlendirilmeli.
+                    </p>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -717,10 +906,24 @@
         }
 
         // Tab switching
+        const requestsTable = document.querySelector('.table-container');
+        const supplierSection = document.getElementById('supplierPerformanceSection');
+
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
+
+                const tabType = this.getAttribute('data-tab');
+
+                // Show/hide sections based on tab
+                if (tabType === 'suppliers') {
+                    requestsTable.style.display = 'none';
+                    supplierSection.style.display = 'block';
+                } else {
+                    requestsTable.style.display = 'block';
+                    supplierSection.style.display = 'none';
+                }
             });
         });
 
