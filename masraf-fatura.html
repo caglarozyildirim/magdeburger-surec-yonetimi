@@ -7,6 +7,181 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--border);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .file-upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .input-hint {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="topbar">
@@ -96,8 +271,8 @@
         <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; margin-top: 32px;">
             <div style="font-size: 64px; margin-bottom: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="64" height="64"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div>
             <h2 style="margin-bottom: 12px; color: var(--dark);">Masraf Talep Sistemi</h2>
-            <p style="color: var(--text-light); margin-bottom: 24px;">Mobil cihazdan fatura fotoğrafı yükleyerek, OCR ile otomatik masraf formu oluşturun</p>
-            <button style="padding: 12px 32px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+            <p style="color: var(--text-light); margin-bottom: 24px;">Manuel giriş veya OCR ile otomatik masraf formu oluşturun</p>
+            <button onclick="openExpenseModal()" style="padding: 12px 32px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                 + Yeni Masraf Talebi Oluştur
             </button>
             <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; text-align: left;">
@@ -125,6 +300,98 @@
         </div>
     </main>
 
+    <!-- New Expense Modal -->
+    <div class="modal" id="expenseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Yeni Masraf Talebi Oluştur</h3>
+                <button class="modal-close" onclick="closeExpenseModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="expenseForm">
+                    <div class="form-group">
+                        <label class="form-label">Masraf Türü *</label>
+                        <select class="form-select" id="expenseType" required>
+                            <option value="">Masraf türü seçin</option>
+                            <option value="travel">Seyahat</option>
+                            <option value="accommodation">Konaklama</option>
+                            <option value="meal">Yemek</option>
+                            <option value="transport">Ulaşım</option>
+                            <option value="office">Ofis Malzemeleri</option>
+                            <option value="communication">İletişim</option>
+                            <option value="training">Eğitim</option>
+                            <option value="other">Diğer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Açıklama *</label>
+                        <textarea class="form-textarea" id="description" placeholder="Masraf açıklamasını girin..." required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Tutar (₺) *</label>
+                            <input type="number" class="form-input" id="amount" placeholder="0.00" step="0.01" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Tarih *</label>
+                            <input type="date" class="form-input" id="expenseDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Bütçe Kalemi *</label>
+                            <select class="form-select" id="budgetItem" required>
+                                <option value="">Bütçe kalemi seçin</option>
+                                <option value="it-software">BT - Yazılım</option>
+                                <option value="it-hardware">BT - Donanım</option>
+                                <option value="admin">Genel İdari Giderler</option>
+                                <option value="marketing">Pazarlama</option>
+                                <option value="training">Eğitim</option>
+                                <option value="hr">İnsan Kaynakları</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Fatura No</label>
+                            <input type="text" class="form-input" id="invoiceNumber" placeholder="Opsiyonel">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tedarikçi/Satıcı</label>
+                        <input type="text" class="form-input" id="vendor" placeholder="Tedarikçi adı">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Fatura/Makbuz Belgesi</label>
+                        <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                            <div class="file-upload-icon">📎</div>
+                            <div><strong>Belge yüklemek için tıklayın</strong></div>
+                            <div style="font-size: 12px; color: var(--text-light); margin-top: 8px;">
+                                PDF, JPEG, PNG desteklenir • OCR ile otomatik veri çıkarımı
+                            </div>
+                        </div>
+                        <input type="file" id="fileInput" style="display: none;" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                        <div id="fileList" style="margin-top: 12px; font-size: 13px; color: var(--text);"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Ek Notlar</label>
+                        <textarea class="form-textarea" id="notes" placeholder="Varsa ek açıklama veya notlar..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeExpenseModal()">İptal</button>
+                <button class="btn btn-primary" onclick="submitExpense()">Masraf Talebi Oluştur</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Mobile menu functionality
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -140,6 +407,73 @@
 
         mobileMenuToggle.addEventListener('click', toggleMobileMenu);
         sidebarOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Expense Modal Functions
+        function openExpenseModal() {
+            document.getElementById('expenseModal').classList.add('active');
+            // Set today's date as default
+            document.getElementById('expenseDate').valueAsDate = new Date();
+        }
+
+        function closeExpenseModal() {
+            document.getElementById('expenseModal').classList.remove('active');
+            document.getElementById('expenseForm').reset();
+            document.getElementById('fileList').innerHTML = '';
+        }
+
+        function submitExpense() {
+            const form = document.getElementById('expenseForm');
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const formData = {
+                type: document.getElementById('expenseType').value,
+                description: document.getElementById('description').value,
+                amount: document.getElementById('amount').value,
+                date: document.getElementById('expenseDate').value,
+                budgetItem: document.getElementById('budgetItem').value,
+                invoiceNumber: document.getElementById('invoiceNumber').value,
+                vendor: document.getElementById('vendor').value,
+                notes: document.getElementById('notes').value
+            };
+
+            console.log('Masraf Talebi:', formData);
+
+            // Success message
+            alert('✓ Masraf talebi başarıyla oluşturuldu!\n\nTalep No: MAS-2025-' + Math.floor(Math.random() * 9000 + 1000) + '\nDurum: Onay bekliyor\n\nOCR ile fatura bilgileri işleniyor...');
+
+            closeExpenseModal();
+        }
+
+        // File upload handler
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const fileList = document.getElementById('fileList');
+
+            if (files.length > 0) {
+                const fileNames = Array.from(files).map(f => {
+                    const size = (f.size / 1024).toFixed(1);
+                    return `📄 ${f.name} (${size} KB)`;
+                }).join('<br>');
+
+                fileList.innerHTML = `<div style="padding: 12px; background: var(--primary-light); border-radius: 8px; border-left: 3px solid var(--primary);">
+                    ${fileNames}<br>
+                    <span style="color: var(--primary); font-weight: 600; font-size: 12px; margin-top: 8px; display: inline-block;">✓ OCR ile otomatik veri çıkarımı yapılacak</span>
+                </div>`;
+            } else {
+                fileList.innerHTML = '';
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('expenseModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeExpenseModal();
+            }
+        });
     </script>
 </body>
 </html>
