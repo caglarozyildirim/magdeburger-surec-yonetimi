@@ -6,6 +6,7 @@
     <title>Satın Alma Yönetimi - Magdeburger</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
     <style>
         /* Tab Navigation */
         .tabs {
@@ -362,10 +363,12 @@
         </div>
         <div class="topbar-right">
             <button class="notification-btn">
-                🔔
+                <span class="icon icon-bell"></span>
                 <span class="notification-badge"></span>
             </button>
-            <button class="user-menu">👤</button>
+            <button class="user-menu">
+                <span class="icon icon-user"></span>
+            </button>
         </div>
     </div>
 
@@ -376,7 +379,7 @@
             <ul class="sidebar-menu">
                 <li>
                     <a href="index.html" class="sidebar-link">
-                        <span class="icon">📊</span>
+                        <span class="icon icon-dashboard"></span>
                         Dashboard
                     </a>
                 </li>
@@ -388,40 +391,40 @@
             <ul class="sidebar-menu">
                 <li>
                     <a href="satin-alma.html" class="sidebar-link active">
-                        <span class="icon">🛒</span>
+                        <span class="icon icon-cart"></span>
                         Satın Alma
                         <span class="badge badge-warning">12</span>
                     </a>
                 </li>
                 <li>
                     <a href="masraf-fatura.html" class="sidebar-link">
-                        <span class="icon">💳</span>
+                        <span class="icon icon-card"></span>
                         Masraf & Fatura
                         <span class="badge badge-danger">8</span>
                     </a>
                 </li>
                 <li>
                     <a href="butce.html" class="sidebar-link">
-                        <span class="icon">💰</span>
+                        <span class="icon icon-wallet"></span>
                         Bütçe Yönetimi
                     </a>
                 </li>
                 <li>
                     <a href="sozlesme.html" class="sidebar-link">
-                        <span class="icon">📝</span>
+                        <span class="icon icon-document"></span>
                         Sözleşme Yönetimi
                         <span class="badge badge-warning">3</span>
                     </a>
                 </li>
                 <li>
                     <a href="dokuman.html" class="sidebar-link">
-                        <span class="icon">📁</span>
+                        <span class="icon icon-folder"></span>
                         Doküman Yönetimi
                     </a>
                 </li>
                 <li>
                     <a href="raporlar.html" class="sidebar-link">
-                        <span class="icon">📈</span>
+                        <span class="icon icon-chart"></span>
                         Raporlar & Analitik
                     </a>
                 </li>
@@ -433,13 +436,13 @@
             <ul class="sidebar-menu">
                 <li>
                     <a href="#" class="sidebar-link">
-                        <span class="icon">⚙️</span>
+                        <span class="icon icon-settings"></span>
                         Ayarlar
                     </a>
                 </li>
                 <li>
                     <a href="#" class="sidebar-link">
-                        <span class="icon">👥</span>
+                        <span class="icon icon-users"></span>
                         Kullanıcılar
                     </a>
                 </li>
@@ -451,7 +454,7 @@
     <main class="main-content">
         <!-- Page Header -->
         <div class="page-header">
-            <h1 class="page-title">Satın Alma Yönetimi <span class="ai-badge">✨ AI Destekli</span> <span class="ocr-badge">📄 OCR Aktif</span></h1>
+            <h1 class="page-title">Satın Alma Yönetimi <span class="ai-badge">AI Destekli</span> <span class="ocr-badge">OCR Aktif</span></h1>
             <p class="page-subtitle">Akıllı satın alma süreçleri, teklif karşılaştırma ve onay yönetimi</p>
         </div>
 
@@ -459,7 +462,11 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon orange">⏳</div>
+                    <div class="stat-icon orange">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/>
+                        </svg>
+                    </div>
                     <div class="stat-trend up">↑ 12%</div>
                 </div>
                 <div class="stat-value">24</div>
@@ -468,7 +475,9 @@
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon blue">📋</div>
+                    <div class="stat-icon blue">
+                        <span class="icon icon-document"></span>
+                    </div>
                     <div class="stat-trend up">↑ 8%</div>
                 </div>
                 <div class="stat-value">12</div>
@@ -477,7 +486,11 @@
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon green">✓</div>
+                    <div class="stat-icon green">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                        </svg>
+                    </div>
                     <div class="stat-trend up">↑ 15%</div>
                 </div>
                 <div class="stat-value">156</div>
@@ -486,7 +499,9 @@
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon red">₺</div>
+                    <div class="stat-icon red">
+                        <span class="icon icon-wallet"></span>
+                    </div>
                     <div class="stat-trend down">↓ 5%</div>
                 </div>
                 <div class="stat-value">₺1.2M</div>
@@ -507,7 +522,9 @@
         <div class="table-container">
             <div class="table-header">
                 <div class="search-box">
-                    <span>🔍</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
                     <input type="text" placeholder="Talep ara..." id="searchInput">
                 </div>
                 <button class="btn btn-primary" onclick="openNewRequestModal()">
@@ -662,7 +679,9 @@
                     <div class="form-group">
                         <label class="form-label">Teklif / Proforma Belgesi (OCR Destekli)</label>
                         <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                            <div class="file-upload-icon">📄</div>
+                            <div class="file-upload-icon">
+                                <span class="icon icon-document"></span>
+                            </div>
                             <div><strong>Belge yüklemek için tıklayın</strong></div>
                             <div style="font-size: 12px; color: var(--text-light); margin-top: 8px;">
                                 PDF, JPEG, PNG desteklenir • OCR ile otomatik veri çıkarımı yapılır

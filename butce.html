@@ -6,6 +6,7 @@
     <title>Bütçe Yönetimi - Magdeburger</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
 </head>
 <body>
     <div class="topbar">
@@ -16,8 +17,8 @@
             </div>
         </div>
         <div class="topbar-right">
-            <button class="notification-btn">🔔<span class="notification-badge"></span></button>
-            <button class="user-menu">👤</button>
+            <button class="notification-btn"><span class="icon icon-bell"></span><span class="notification-badge"></span></button>
+            <button class="user-menu"><span class="icon icon-user"></span></button>
         </div>
     </div>
 
@@ -25,32 +26,32 @@
         <div class="sidebar-section">
             <div class="sidebar-title">Ana Menü</div>
             <ul class="sidebar-menu">
-                <li><a href="index.html" class="sidebar-link"><span class="icon">📊</span>Dashboard</a></li>
+                <li><a href="index.html" class="sidebar-link"><span class="icon icon-dashboard"></span>Dashboard</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
             <div class="sidebar-title">Modüller</div>1
             <ul class="sidebar-menu">
-                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon">🛒</span>Satın Alma<span class="badge badge-warning">12</span></a></li>
-                <li><a href="masraf-fatura.html" class="sidebar-link"><span class="icon">💳</span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
-                <li><a href="butce.html" class="sidebar-link active"><span class="icon">💰</span>Bütçe Yönetimi</a></li>
-                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon">📝</span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
-                <li><a href="dokuman.html" class="sidebar-link"><span class="icon">📁</span>Doküman Yönetimi</a></li>
-                <li><a href="raporlar.html" class="sidebar-link"><span class="icon">📈</span>Raporlar & Analitik</a></li>
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon icon-cart"></span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link"><span class="icon icon-card"></span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link active"><span class="icon icon-wallet"></span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon icon-document"></span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link"><span class="icon icon-folder"></span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link"><span class="icon icon-chart"></span>Raporlar & Analitik</a></li>
             </ul>
         </div>
     </aside>
 
     <main class="main-content">
         <div class="page-header">
-            <h1 class="page-title">Bütçe Yönetimi 💰</h1>
+            <h1 class="page-title">Bütçe Yönetimi <span class="icon icon-wallet"></span></h1>
             <p class="page-subtitle">AI tabanlı bütçe tahminleme, trend analizi ve otomatik uyarı sistemi</p>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon blue">💼</div>
+                    <div class="stat-icon blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 15H4V8h3v1c0 .55.45 1 1 1s1-.45 1-1V8h6v1c0 .55.45 1 1 1s1-.45 1-1V8h3v11z"/></svg></div>
                     <div class="stat-trend down">↓ 3%</div>
                 </div>
                 <div class="stat-value">₺2.4M</div>
@@ -58,7 +59,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon green">✓</div>
+                    <div class="stat-icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
                     <div class="stat-trend up">↑ 8%</div>
                 </div>
                 <div class="stat-value">₺1.87M</div>
@@ -66,7 +67,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon orange">⚡</div>
+                    <div class="stat-icon orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg></div>
                     <div class="stat-trend up">↑ 5%</div>
                 </div>
                 <div class="stat-value">₺530K</div>
@@ -74,7 +75,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon red">⚠️</div>
+                    <div class="stat-icon red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg></div>
                     <div class="stat-trend up">↑ 12%</div>
                 </div>
                 <div class="stat-value">4</div>
@@ -92,7 +93,7 @@
                     <div style="flex: 1; background: linear-gradient(to top, #10b981, #34d399); height: 88%; border-radius: 8px 8px 0 0;"></div>
                     <div style="flex: 1; background: linear-gradient(to top, #f59e0b, #fbbf24); height: 92%; border-radius: 8px 8px 0 0;"></div>
                     <div style="flex: 1; background: linear-gradient(to top, #ef4444, #f87171); height: 98%; border-radius: 8px 8px 0 0; position: relative;">
-                        <div style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; white-space: nowrap;">⚠️ Yüksek</div>
+                        <div style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; white-space: nowrap;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="12" height="12" style="display: inline-block; vertical-align: middle; margin-right: 4px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>Yüksek</div>
                     </div>
                 </div>
                 <div style="display: flex; justify-content: space-around; margin-top: 16px; font-size: 12px; color: var(--text-light);">
@@ -110,7 +111,7 @@
                 <div style="padding: 16px; background: #fef3c7; border-radius: 8px; margin-bottom: 16px;">
                     <div style="font-size: 13px; color: var(--text-light); margin-bottom: 8px;">Yıl Sonu Tahmini</div>
                     <div style="font-size: 24px; font-weight: 700; color: var(--warning);">₺2.58M</div>
-                    <div style="font-size: 11px; color: var(--danger); margin-top: 4px;">⚠️ Bütçe aşımı riski</div>
+                    <div style="font-size: 11px; color: var(--danger); margin-top: 4px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="11" height="11" style="display: inline-block; vertical-align: middle; margin-right: 2px;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>Bütçe aşımı riski</div>
                 </div>
                 <button style="width: 100%; padding: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                     Detaylı Analiz Görüntüle

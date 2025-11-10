@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magdeburger Süreç Yönetimi Platformu</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="icons.css">
     <style>
         :root {
             --primary: #0066cc;
@@ -546,10 +547,12 @@
         </div>
         <div class="topbar-right">
             <button class="notification-btn">
-                🔔
+                <span class="icon icon-bell"></span>
                 <span class="notification-badge"></span>
             </button>
-            <button class="user-menu">👤</button>
+            <button class="user-menu">
+                <span class="icon icon-user"></span>
+            </button>
         </div>
     </div>
 
@@ -560,7 +563,7 @@
             <ul class="sidebar-menu">
                 <li>
                     <a href="index.html" class="sidebar-link active">
-                        <span class="icon">📊</span>
+                        <span class="icon icon-dashboard"></span>
                         Dashboard
                     </a>
                 </li>
@@ -572,40 +575,40 @@
             <ul class="sidebar-menu">
                 <li>
                     <a href="satin-alma.html" class="sidebar-link">
-                        <span class="icon">🛒</span>
+                        <span class="icon icon-cart"></span>
                         Satın Alma
                         <span class="badge badge-warning">12</span>
                     </a>
                 </li>
                 <li>
                     <a href="masraf-fatura.html" class="sidebar-link">
-                        <span class="icon">💳</span>
+                        <span class="icon icon-card"></span>
                         Masraf & Fatura
                         <span class="badge badge-danger">8</span>
                     </a>
                 </li>
                 <li>
                     <a href="butce.html" class="sidebar-link">
-                        <span class="icon">💰</span>
+                        <span class="icon icon-wallet"></span>
                         Bütçe Yönetimi
                     </a>
                 </li>
                 <li>
                     <a href="sozlesme.html" class="sidebar-link">
-                        <span class="icon">📝</span>
+                        <span class="icon icon-document"></span>
                         Sözleşme Yönetimi
                         <span class="badge badge-warning">3</span>
                     </a>
                 </li>
                 <li>
                     <a href="dokuman.html" class="sidebar-link">
-                        <span class="icon">📁</span>
+                        <span class="icon icon-folder"></span>
                         Doküman Yönetimi
                     </a>
                 </li>
                 <li>
                     <a href="raporlar.html" class="sidebar-link">
-                        <span class="icon">📈</span>
+                        <span class="icon icon-chart"></span>
                         Raporlar & Analitik
                     </a>
                 </li>
@@ -617,13 +620,13 @@
             <ul class="sidebar-menu">
                 <li>
                     <a href="#" class="sidebar-link">
-                        <span class="icon">⚙️</span>
+                        <span class="icon icon-settings"></span>
                         Ayarlar
                     </a>
                 </li>
                 <li>
                     <a href="#" class="sidebar-link">
-                        <span class="icon">👥</span>
+                        <span class="icon icon-users"></span>
                         Kullanıcılar
                     </a>
                 </li>
@@ -641,7 +644,11 @@
 
         <!-- Alert Banner -->
         <div class="alert-banner">
-            <div class="alert-icon">⚠️</div>
+            <div class="alert-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                </svg>
+            </div>
             <div class="alert-content">
                 <div class="alert-title">Dikkat: Sözleşme Yenileme</div>
                 <div class="alert-text">3 adet sözleşmeniz önümüzdeki 30 gün içinde yenilenme tarihine ulaşıyor.</div>
@@ -652,7 +659,9 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon blue">🛒</div>
+                    <div class="stat-icon blue">
+                        <span class="icon icon-cart"></span>
+                    </div>
                     <div class="stat-trend up">↑ 12%</div>
                 </div>
                 <div class="stat-value">24</div>
@@ -664,7 +673,9 @@
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon green">💳</div>
+                    <div class="stat-icon green">
+                        <span class="icon icon-card"></span>
+                    </div>
                     <div class="stat-trend up">↑ 8%</div>
                 </div>
                 <div class="stat-value">₺456.8K</div>
@@ -676,7 +687,9 @@
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon orange">💰</div>
+                    <div class="stat-icon orange">
+                        <span class="icon icon-wallet"></span>
+                    </div>
                     <div class="stat-trend down">↓ 3%</div>
                 </div>
                 <div class="stat-value">78%</div>
@@ -688,7 +701,9 @@
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon red">📝</div>
+                    <div class="stat-icon red">
+                        <span class="icon icon-document"></span>
+                    </div>
                     <div class="stat-trend up">↑ 5%</div>
                 </div>
                 <div class="stat-value">142</div>
@@ -702,7 +717,9 @@
         <!-- Modules Grid -->
         <div class="modules-grid">
             <a href="satin-alma.html" class="module-card">
-                <div class="module-icon blue">🛒</div>
+                <div class="module-icon blue">
+                    <span class="icon icon-cart"></span>
+                </div>
                 <div class="module-title">Satın Alma Yönetimi</div>
                 <div class="module-description">
                     AI destekli akıllı satın alma, teklif toplama, karşılaştırma ve onay süreçleri
@@ -720,7 +737,9 @@
             </a>
 
             <a href="masraf-fatura.html" class="module-card">
-                <div class="module-icon green">💳</div>
+                <div class="module-icon green">
+                    <span class="icon icon-card"></span>
+                </div>
                 <div class="module-title">Masraf & Fatura</div>
                 <div class="module-description">
                     OCR destekli fatura okuma, otomatik masraf kategorilendirme ve onay akışı
@@ -738,7 +757,9 @@
             </a>
 
             <a href="butce.html" class="module-card">
-                <div class="module-icon orange">💰</div>
+                <div class="module-icon orange">
+                    <span class="icon icon-wallet"></span>
+                </div>
                 <div class="module-title">Bütçe Yönetimi</div>
                 <div class="module-description">
                     AI tabanlı bütçe tahminleme, trend analizi ve otomatik uyarı sistemi
@@ -756,7 +777,9 @@
             </a>
 
             <a href="sozlesme.html" class="module-card">
-                <div class="module-icon red">📝</div>
+                <div class="module-icon red">
+                    <span class="icon icon-document"></span>
+                </div>
                 <div class="module-title">Sözleşme Yönetimi</div>
                 <div class="module-description">
                     OCR destekli sözleşme analizi, yenileme takibi ve compliance kontrolü
@@ -774,7 +797,9 @@
             </a>
 
             <a href="dokuman.html" class="module-card">
-                <div class="module-icon" style="background: #e0e7ff; color: #6366f1;">📁</div>
+                <div class="module-icon" style="background: #e0e7ff; color: #6366f1;">
+                    <span class="icon icon-folder"></span>
+                </div>
                 <div class="module-title">Doküman Yönetimi</div>
                 <div class="module-description">
                     NLP destekli doküman etiketleme, anlamsal arama ve merkezi arşiv
@@ -792,7 +817,9 @@
             </a>
 
             <a href="raporlar.html" class="module-card">
-                <div class="module-icon" style="background: #fce7f3; color: #ec4899;">📈</div>
+                <div class="module-icon" style="background: #fce7f3; color: #ec4899;">
+                    <span class="icon icon-chart"></span>
+                </div>
                 <div class="module-title">Raporlar & Analitik</div>
                 <div class="module-description">
                     KPI tabanlı dashboard, AI destekli anomali tespiti ve dinamik raporlama

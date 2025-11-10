@@ -6,6 +6,7 @@
     <title>Masraf & Fatura Yönetimi - Magdeburger</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
 </head>
 <body>
     <div class="topbar">
@@ -16,8 +17,8 @@
             </div>
         </div>
         <div class="topbar-right">
-            <button class="notification-btn">🔔<span class="notification-badge"></span></button>
-            <button class="user-menu">👤</button>
+            <button class="notification-btn"><span class="icon icon-bell"></span><span class="notification-badge"></span></button>
+            <button class="user-menu"><span class="icon icon-user"></span></button>
         </div>
     </div>
 
@@ -25,32 +26,32 @@
         <div class="sidebar-section">
             <div class="sidebar-title">Ana Menü</div>1
             <ul class="sidebar-menu">1
-                <li><a href="index.html" class="sidebar-link"><span class="icon">📊</span>Dashboard</a></li>
+                <li><a href="index.html" class="sidebar-link"><span class="icon icon-dashboard"></span>Dashboard</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
             <div class="sidebar-title">Modüller</div>
             <ul class="sidebar-menu">
-                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon">🛒</span>Satın Alma<span class="badge badge-warning">12</span></a></li>
-                <li><a href="masraf-fatura.html" class="sidebar-link active"><span class="icon">💳</span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
-                <li><a href="butce.html" class="sidebar-link"><span class="icon">💰</span>Bütçe Yönetimi</a></li>
-                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon">📝</span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
-                <li><a href="dokuman.html" class="sidebar-link"><span class="icon">📁</span>Doküman Yönetimi</a></li>
-                <li><a href="raporlar.html" class="sidebar-link"><span class="icon">📈</span>Raporlar & Analitik</a></li>
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon icon-cart"></span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link active"><span class="icon icon-card"></span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link"><span class="icon icon-wallet"></span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon icon-document"></span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link"><span class="icon icon-folder"></span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link"><span class="icon icon-chart"></span>Raporlar & Analitik</a></li>
             </ul>
         </div>
     </aside>
 
     <main class="main-content">
         <div class="page-header">
-            <h1 class="page-title">Masraf & Fatura Yönetimi 💳</h1>
+            <h1 class="page-title">Masraf & Fatura Yönetimi <span class="icon icon-card"></span></h1>
             <p class="page-subtitle">OCR destekli fatura okuma ve AI tabanlı masraf kategorilendirme</p>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon orange">⏳</div>
+                    <div class="stat-icon orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6zm10 14.5V20H8v-3.5l4-4 4 4zm-4-5l-4-4V4h8v3.5l-4 4z"/></svg></div>
                     <div class="stat-trend up">↑ 5%</div>
                 </div>
                 <div class="stat-value">18</div>
@@ -58,7 +59,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon green">✓</div>
+                    <div class="stat-icon green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
                     <div class="stat-trend up">↑ 12%</div>
                 </div>
                 <div class="stat-value">₺456.8K</div>
@@ -66,7 +67,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon blue">📄</div>
+                    <div class="stat-icon blue"><span class="icon icon-document"></span></div>
                     <div class="stat-trend up">↑ 8%</div>
                 </div>
                 <div class="stat-value">247</div>
@@ -74,7 +75,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon red">⚠️</div>
+                    <div class="stat-icon red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg></div>
                     <div class="stat-trend down">↓ 2%</div>
                 </div>
                 <div class="stat-value">3</div>
@@ -83,7 +84,7 @@
         </div>
 
         <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; margin-top: 32px;">
-            <div style="font-size: 64px; margin-bottom: 16px;">📱</div>
+            <div style="font-size: 64px; margin-bottom: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="64" height="64"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div>
             <h2 style="margin-bottom: 12px; color: var(--dark);">Masraf Talep Sistemi</h2>
             <p style="color: var(--text-light); margin-bottom: 24px;">Mobil cihazdan fatura fotoğrafı yükleyerek, OCR ile otomatik masraf formu oluşturun</p>
             <button style="padding: 12px 32px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
@@ -91,22 +92,22 @@
             </button>
             <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; text-align: left;">
                 <div style="padding: 16px; background: #f0f9ff; border-radius: 8px;">
-                    <div style="font-size: 24px; margin-bottom: 8px;">📸</div>
+                    <div style="font-size: 24px; margin-bottom: 8px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>
                     <div style="font-weight: 600; color: var(--dark);">OCR Tanıma</div>
                     <div style="font-size: 13px; color: var(--text-light);">Fatura bilgileri otomatik çıkarılır</div>
                 </div>
                 <div style="padding: 16px; background: #f0fdf4; border-radius: 8px;">
-                    <div style="font-size: 24px; margin-bottom: 8px;">🤖</div>
+                    <div style="font-size: 24px; margin-bottom: 8px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM9 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg></div>
                     <div style="font-weight: 600; color: var(--dark);">AI Kategor</div>
                     <div style="font-size: 13px; color: var(--text-light);">Otomatik masraf sınıflandırma</div>
                 </div>
                 <div style="padding: 16px; background: #fef3c7; border-radius: 8px;">
-                    <div style="font-size: 24px; margin-bottom: 8px;">✅</div>
+                    <div style="font-size: 24px; margin-bottom: 8px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
                     <div style="font-weight: 600; color: var(--dark);">Dinamik Onay</div>
                     <div style="font-size: 13px; color: var(--text-light);">Tutara göre akışkan onay zinciri</div>
                 </div>
                 <div style="padding: 16px; background: #fce7f3; border-radius: 8px;">
-                    <div style="font-size: 24px; margin-bottom: 8px;">💰</div>
+                    <div style="font-size: 24px; margin-bottom: 8px;"><span class="icon icon-wallet" style="font-size: 24px;"></span></div>
                     <div style="font-weight: 600; color: var(--dark);">Otomatik Bütçe</div>
                     <div style="font-size: 13px; color: var(--text-light);">Onay sonrası bütçe güncelleme</div>
                 </div>
