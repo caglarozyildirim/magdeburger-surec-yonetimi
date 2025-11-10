@@ -11,6 +11,13 @@
 <body>
     <div class="topbar">
         <div class="topbar-left">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
             <div class="logo">
                 <div class="logo-icon">M</div>
                 <span>Magdeburger Süreç Yönetimi</span>
@@ -22,7 +29,10 @@
         </div>
     </div>
 
-    <aside class="sidebar">
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-section">
             <div class="sidebar-title">Ana Menü</div>
             <ul class="sidebar-menu">
@@ -177,5 +187,22 @@
             </div>
         </div>
     </main>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleMobileMenu() {
+            mobileMenuToggle.classList.toggle('active');
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        sidebarOverlay.addEventListener('click', toggleMobileMenu);
+    </script>
 </body>
 </html>
