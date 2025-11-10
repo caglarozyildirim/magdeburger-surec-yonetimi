@@ -181,6 +181,80 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Role Selector Styles */
+        .role-selector {
+            position: relative;
+            margin-right: 16px;
+        }
+
+        .role-badge {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .role-badge:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .role-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 8px;
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .role-dropdown.active {
+            display: block;
+        }
+
+        .role-option {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .role-option:hover {
+            background: var(--bg);
+        }
+
+        .role-option.selected {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .role-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -199,6 +273,42 @@
             </div>
         </div>
         <div class="topbar-right">
+            <div class="role-selector">
+                <button class="role-badge" id="roleButton" onclick="toggleRoleDropdown()">
+                    <span id="currentRole">👤 Çalışan</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+                <div class="role-dropdown" id="roleDropdown">
+                    <div class="role-option" onclick="selectRole('employee')">
+                        <div class="role-icon" style="background: #e0e7ff; color: #6366f1;">👤</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 14px;">Çalışan</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Talep oluştur</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('manager')">
+                        <div class="role-icon" style="background: #dcfce7; color: #10b981;">👨‍💼</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 14px;">Departman Müdürü</div>
+                            <div style="font-size: 11px; color: var(--text-light);">0-5.000₺ onayı</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('director')">
+                        <div class="role-icon" style="background: #fef3c7; color: #f59e0b;">👔</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 14px;">Genel Müdür</div>
+                            <div style="font-size: 11px; color: var(--text-light);">5.001-25.000₺ onayı</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('board')">
+                        <div class="role-icon" style="background: #fee2e2; color: #ef4444;">🎖️</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 14px;">Yönetim Kurulu</div>
+                            <div style="font-size: 11px; color: var(--text-light);">25.000₺+ onayı</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button class="notification-btn"><span class="icon icon-bell"></span><span class="notification-badge"></span></button>
             <button class="user-menu"><span class="icon icon-user"></span></button>
         </div>
