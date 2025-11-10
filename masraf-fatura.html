@@ -333,6 +333,7 @@
                         <div class="form-group">
                             <label class="form-label">Tutar (₺) *</label>
                             <input type="number" class="form-input" id="amount" placeholder="0.00" step="0.01" required>
+                            <div id="approvalInfo" class="input-hint" style="margin-top: 8px; padding: 8px; border-radius: 6px; display: none; font-weight: 500;"></div>
                         </div>
 
                         <div class="form-group">
@@ -437,11 +438,60 @@
             }
         });
 
+        // Real-time approval info display
+        document.getElementById('amount').addEventListener('input', function(e) {
+            const amount = parseFloat(e.target.value);
+            const approvalInfo = document.getElementById('approvalInfo');
+
+            if (isNaN(amount) || amount <= 0) {
+                approvalInfo.style.display = 'none';
+                return;
+            }
+
+            const flow = getApprovalFlow(amount);
+            approvalInfo.style.display = 'block';
+            approvalInfo.style.background = flow.color + '15';
+            approvalInfo.style.color = flow.color;
+            approvalInfo.style.border = '1px solid ' + flow.color + '40';
+
+            let icon = flow.level === 1 ? '✓' : flow.level === 2 ? '⚠️' : '🔴';
+            approvalInfo.innerHTML = `${icon} Onaylayıcı: <strong>${flow.approver}</strong> • Süre: ${flow.approvalTime}`;
+        });
+
         function closeExpenseModal() {
             document.getElementById('expenseModal').classList.remove('active');
             document.getElementById('expenseForm').reset();
             document.getElementById('fileList').innerHTML = '';
             document.getElementById('vendorOther').style.display = 'none';
+            document.getElementById('approvalInfo').style.display = 'none';
+        }
+
+        // Approval hierarchy based on amount
+        function getApprovalFlow(amount) {
+            const numAmount = parseFloat(amount);
+
+            if (numAmount <= 5000) {
+                return {
+                    level: 1,
+                    approver: 'Departman Müdürü',
+                    approvalTime: '1-2 iş günü',
+                    color: '#10b981'
+                };
+            } else if (numAmount <= 25000) {
+                return {
+                    level: 2,
+                    approver: 'Genel Müdür',
+                    approvalTime: '3-5 iş günü',
+                    color: '#f59e0b'
+                };
+            } else {
+                return {
+                    level: 3,
+                    approver: 'Yönetim Kurulu',
+                    approvalTime: '5-10 iş günü',
+                    color: '#ef4444'
+                };
+            }
         }
 
         function submitExpense() {
@@ -457,21 +507,43 @@
                 ? document.getElementById('vendorOther').value
                 : vendorSelect.value;
 
+            const amount = document.getElementById('amount').value;
+            const approvalFlow = getApprovalFlow(amount);
+            const requestNumber = 'MAS-2025-' + Math.floor(Math.random() * 9000 + 1000);
+
             const formData = {
+                requestNumber: requestNumber,
                 type: document.getElementById('expenseType').value,
                 description: document.getElementById('description').value,
-                amount: document.getElementById('amount').value,
+                amount: amount,
                 date: document.getElementById('expenseDate').value,
                 budgetItem: document.getElementById('budgetItem').value,
                 invoiceNumber: document.getElementById('invoiceNumber').value,
                 vendor: vendorValue,
-                notes: document.getElementById('notes').value
+                notes: document.getElementById('notes').value,
+                approvalFlow: approvalFlow
             };
 
             console.log('Masraf Talebi:', formData);
 
-            // Success message
-            alert('✓ Masraf talebi başarıyla oluşturuldu!\n\nTalep No: MAS-2025-' + Math.floor(Math.random() * 9000 + 1000) + '\nDurum: Onay bekliyor\n\nOCR ile fatura bilgileri işleniyor...');
+            // Success message with approval flow
+            let approvalIcon = '';
+            if (approvalFlow.level === 1) approvalIcon = '✓';
+            else if (approvalFlow.level === 2) approvalIcon = '⚠️';
+            else approvalIcon = '🔴';
+
+            alert(`✓ Masraf talebi başarıyla oluşturuldu!\n\n` +
+                  `Talep No: ${requestNumber}\n` +
+                  `Tutar: ₺${parseFloat(amount).toLocaleString('tr-TR')}\n` +
+                  `\n${approvalIcon} ONAY SÜRECİ:\n` +
+                  `─────────────────────\n` +
+                  `Onaylayıcı: ${approvalFlow.approver}\n` +
+                  `Tahmini Süre: ${approvalFlow.approvalTime}\n` +
+                  `Durum: Onay bekliyor\n\n` +
+                  `${approvalFlow.level === 1 ? '✓ Hızlı onay süreci başlatıldı' :
+                     approvalFlow.level === 2 ? '⚠️ Üst düzey onay gerekli' :
+                     '🔴 Yönetim kurulu onayı gerekli'}\n\n` +
+                  `OCR ile fatura bilgileri işleniyor...`);
 
             closeExpenseModal();
         }
