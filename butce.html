@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bütçe Yönetimi - Magdeburger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="notification-btn">🔔<span class="notification-badge"></span></button>
+            <button class="user-menu">👤</button>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="sidebar-link"><span class="icon">📊</span>Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>1
+            <ul class="sidebar-menu">
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon">🛒</span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link"><span class="icon">💳</span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link active"><span class="icon">💰</span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon">📝</span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link"><span class="icon">📁</span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link"><span class="icon">📈</span>Raporlar & Analitik</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Bütçe Yönetimi 💰</h1>
+            <p class="page-subtitle">AI tabanlı bütçe tahminleme, trend analizi ve otomatik uyarı sistemi</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">💼</div>
+                    <div class="stat-trend down">↓ 3%</div>
+                </div>
+                <div class="stat-value">₺2.4M</div>
+                <div class="stat-label">Toplam Yıllık Bütçe</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">✓</div>
+                    <div class="stat-trend up">↑ 8%</div>
+                </div>
+                <div class="stat-value">₺1.87M</div>
+                <div class="stat-label">Kullanılan Bütçe (78%)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">⚡</div>
+                    <div class="stat-trend up">↑ 5%</div>
+                </div>
+                <div class="stat-value">₺530K</div>
+                <div class="stat-label">Kalan Bütçe (22%)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon red">⚠️</div>
+                    <div class="stat-trend up">↑ 12%</div>
+                </div>
+                <div class="stat-value">4</div>
+                <div class="stat-label">Bütçe Aşımı Uyarısı</div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-top: 32px;">
+            <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 20px; color: var(--dark);">Aylık Bütçe Kullanım Trendi</h3>
+                <div style="height: 300px; display: flex; align-items: flex-end; gap: 12px;">
+                    <div style="flex: 1; background: linear-gradient(to top, #10b981, #34d399); height: 65%; border-radius: 8px 8px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #10b981, #34d399); height: 72%; border-radius: 8px 8px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #10b981, #34d399); height: 58%; border-radius: 8px 8px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #10b981, #34d399); height: 88%; border-radius: 8px 8px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #f59e0b, #fbbf24); height: 92%; border-radius: 8px 8px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #ef4444, #f87171); height: 98%; border-radius: 8px 8px 0 0; position: relative;">
+                        <div style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; white-space: nowrap;">⚠️ Yüksek</div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-around; margin-top: 16px; font-size: 12px; color: var(--text-light);">
+                    <span>Oca</span><span>Şub</span><span>Mar</span><span>Nis</span><span>May</span><span>Haz</span>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 20px; color: var(--dark);">AI Tahminleme</h3>
+                <div style="padding: 16px; background: #f0f9ff; border-radius: 8px; margin-bottom: 16px;">
+                    <div style="font-size: 13px; color: var(--text-light); margin-bottom: 8px;">Gelecek Ay Tahmini</div>
+                    <div style="font-size: 24px; font-weight: 700; color: var(--primary);">₺425K</div>
+                    <div style="font-size: 11px; color: var(--success); margin-top: 4px;">↑ %12 artış bekleniyor</div>
+                </div>
+                <div style="padding: 16px; background: #fef3c7; border-radius: 8px; margin-bottom: 16px;">
+                    <div style="font-size: 13px; color: var(--text-light); margin-bottom: 8px;">Yıl Sonu Tahmini</div>
+                    <div style="font-size: 24px; font-weight: 700; color: var(--warning);">₺2.58M</div>
+                    <div style="font-size: 11px; color: var(--danger); margin-top: 4px;">⚠️ Bütçe aşımı riski</div>
+                </div>
+                <button style="width: 100%; padding: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    Detaylı Analiz Görüntüle
+                </button>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border); margin-top: 24px;">
+            <h3 style="margin-bottom: 20px; color: var(--dark);">Departman Bazlı Bütçe Dağılımı</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+                <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600;">BT - Yazılım Lisans</span>
+                        <span style="color: var(--danger); font-weight: 600;">92%</span>
+                    </div>
+                    <div style="height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden;">
+                        <div style="height: 100%; width: 92%; background: linear-gradient(90deg, var(--danger), #f87171); border-radius: 4px;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--text-light);">
+                        <span>₺460K / ₺500K</span>
+                        <span>Kalan: ₺40K</span>
+                    </div>
+                </div>
+                <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600;">BT - Donanım</span>
+                        <span style="color: var(--success); font-weight: 600;">68%</span>
+                    </div>
+                    <div style="height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden;">
+                        <div style="height: 100%; width: 68%; background: linear-gradient(90deg, var(--success), #34d399); border-radius: 4px;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--text-light);">
+                        <span>₺340K / ₺500K</span>
+                        <span>Kalan: ₺160K</span>
+                    </div>
+                </div>
+                <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600;">Genel İdari</span>
+                        <span style="color: var(--warning); font-weight: 600;">85%</span>
+                    </div>
+                    <div style="height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden;">
+                        <div style="height: 100%; width: 85%; background: linear-gradient(90deg, var(--warning), #fbbf24); border-radius: 4px;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--text-light);">
+                        <span>₺425K / ₺500K</span>
+                        <span>Kalan: ₺75K</span>
+                    </div>
+                </div>
+                <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-weight: 600;">Pazarlama</span>
+                        <span style="color: var(--success); font-weight: 600;">54%</span>
+                    </div>
+                    <div style="height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden;">
+                        <div style="height: 100%; width: 54%; background: linear-gradient(90deg, var(--success), #34d399); border-radius: 4px;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--text-light);">
+                        <span>₺270K / ₺500K</span>
+                        <span>Kalan: ₺230K</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

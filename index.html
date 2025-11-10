@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magdeburger Süreç Yönetimi Platformu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #004a99;
+            --primary-light: #e6f2ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark: #1e293b;
+            --text: #334155;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Top Navigation */
+        .topbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .notification-btn, .user-menu {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .notification-btn:hover, .user-menu:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 64px;
+            width: 260px;
+            height: calc(100vh - 64px);
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            padding: 24px 0;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            padding: 0 24px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 14px;
+            position: relative;
+        }
+
+        .sidebar-link:hover {
+            background: var(--bg);
+            color: var(--primary);
+        }
+
+        .sidebar-link.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-right: 3px solid var(--primary);
+        }
+
+        .sidebar-link .icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            margin-top: 64px;
+            padding: 32px;
+            min-height: calc(100vh - 64px);
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.blue {
+            background: #dbeafe;
+            color: var(--info);
+        }
+
+        .stat-icon.green {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .stat-icon.orange {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .stat-icon.red {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .stat-trend.up {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .stat-trend.down {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .chart-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .chart-subtitle {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Module Cards */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .module-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .module-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .module-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .module-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .module-description {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .module-stats {
+            display: flex;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .module-stat {
+            flex: 1;
+        }
+
+        .module-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .module-stat-label {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 999;
+        }
+
+        .fab {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
+            transition: all 0.3s;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 8px;
+            background: var(--bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .alert-text {
+            font-size: 14px;
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="notification-btn">
+                🔔
+                <span class="notification-badge"></span>
+            </button>
+            <button class="user-menu">👤</button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="index.html" class="sidebar-link active">
+                        <span class="icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="satin-alma.html" class="sidebar-link">
+                        <span class="icon">🛒</span>
+                        Satın Alma
+                        <span class="badge badge-warning">12</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="masraf-fatura.html" class="sidebar-link">
+                        <span class="icon">💳</span>
+                        Masraf & Fatura
+                        <span class="badge badge-danger">8</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="butce.html" class="sidebar-link">
+                        <span class="icon">💰</span>
+                        Bütçe Yönetimi
+                    </a>
+                </li>
+                <li>
+                    <a href="sozlesme.html" class="sidebar-link">
+                        <span class="icon">📝</span>
+                        Sözleşme Yönetimi
+                        <span class="badge badge-warning">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="dokuman.html" class="sidebar-link">
+                        <span class="icon">📁</span>
+                        Doküman Yönetimi
+                    </a>
+                </li>
+                <li>
+                    <a href="raporlar.html" class="sidebar-link">
+                        <span class="icon">📈</span>
+                        Raporlar & Analitik
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Yönetim</div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <span class="icon">⚙️</span>
+                        Ayarlar
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <span class="icon">👥</span>
+                        Kullanıcılar
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">Süreç yönetimi platformuna hoş geldiniz</p>
+        </div>
+
+        <!-- Alert Banner -->
+        <div class="alert-banner">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-content">
+                <div class="alert-title">Dikkat: Sözleşme Yenileme</div>
+                <div class="alert-text">3 adet sözleşmeniz önümüzdeki 30 gün içinde yenilenme tarihine ulaşıyor.</div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">🛒</div>
+                    <div class="stat-trend up">↑ 12%</div>
+                </div>
+                <div class="stat-value">24</div>
+                <div class="stat-label">Bekleyen Satın Alma Talebi</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 68%;"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">💳</div>
+                    <div class="stat-trend up">↑ 8%</div>
+                </div>
+                <div class="stat-value">₺456.8K</div>
+                <div class="stat-label">Bu Ayki Toplam Masraf</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 45%;"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">💰</div>
+                    <div class="stat-trend down">↓ 3%</div>
+                </div>
+                <div class="stat-value">78%</div>
+                <div class="stat-label">Yıllık Bütçe Kullanımı</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 78%;"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon red">📝</div>
+                    <div class="stat-trend up">↑ 5%</div>
+                </div>
+                <div class="stat-value">142</div>
+                <div class="stat-label">Aktif Sözleşme</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 92%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modules Grid -->
+        <div class="modules-grid">
+            <a href="satin-alma.html" class="module-card">
+                <div class="module-icon blue">🛒</div>
+                <div class="module-title">Satın Alma Yönetimi</div>
+                <div class="module-description">
+                    AI destekli akıllı satın alma, teklif toplama, karşılaştırma ve onay süreçleri
+                </div>
+                <div class="module-stats">
+                    <div class="module-stat">
+                        <div class="module-stat-value">24</div>
+                        <div class="module-stat-label">Bekleyen</div>
+                    </div>
+                    <div class="module-stat">
+                        <div class="module-stat-value">156</div>
+                        <div class="module-stat-label">Tamamlanan</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="masraf-fatura.html" class="module-card">
+                <div class="module-icon green">💳</div>
+                <div class="module-title">Masraf & Fatura</div>
+                <div class="module-description">
+                    OCR destekli fatura okuma, otomatik masraf kategorilendirme ve onay akışı
+                </div>
+                <div class="module-stats">
+                    <div class="module-stat">
+                        <div class="module-stat-value">18</div>
+                        <div class="module-stat-label">Bekleyen</div>
+                    </div>
+                    <div class="module-stat">
+                        <div class="module-stat-value">₺456K</div>
+                        <div class="module-stat-label">Bu Ay</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="butce.html" class="module-card">
+                <div class="module-icon orange">💰</div>
+                <div class="module-title">Bütçe Yönetimi</div>
+                <div class="module-description">
+                    AI tabanlı bütçe tahminleme, trend analizi ve otomatik uyarı sistemi
+                </div>
+                <div class="module-stats">
+                    <div class="module-stat">
+                        <div class="module-stat-value">78%</div>
+                        <div class="module-stat-label">Kullanım</div>
+                    </div>
+                    <div class="module-stat">
+                        <div class="module-stat-value">₺2.4M</div>
+                        <div class="module-stat-label">Yıllık</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="sozlesme.html" class="module-card">
+                <div class="module-icon red">📝</div>
+                <div class="module-title">Sözleşme Yönetimi</div>
+                <div class="module-description">
+                    OCR destekli sözleşme analizi, yenileme takibi ve compliance kontrolü
+                </div>
+                <div class="module-stats">
+                    <div class="module-stat">
+                        <div class="module-stat-value">142</div>
+                        <div class="module-stat-label">Aktif</div>
+                    </div>
+                    <div class="module-stat">
+                        <div class="module-stat-value">3</div>
+                        <div class="module-stat-label">Yenilenecek</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="dokuman.html" class="module-card">
+                <div class="module-icon" style="background: #e0e7ff; color: #6366f1;">📁</div>
+                <div class="module-title">Doküman Yönetimi</div>
+                <div class="module-description">
+                    NLP destekli doküman etiketleme, anlamsal arama ve merkezi arşiv
+                </div>
+                <div class="module-stats">
+                    <div class="module-stat">
+                        <div class="module-stat-value">2,847</div>
+                        <div class="module-stat-label">Doküman</div>
+                    </div>
+                    <div class="module-stat">
+                        <div class="module-stat-value">12.4GB</div>
+                        <div class="module-stat-label">Boyut</div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="raporlar.html" class="module-card">
+                <div class="module-icon" style="background: #fce7f3; color: #ec4899;">📈</div>
+                <div class="module-title">Raporlar & Analitik</div>
+                <div class="module-description">
+                    KPI tabanlı dashboard, AI destekli anomali tespiti ve dinamik raporlama
+                </div>
+                <div class="module-stats">
+                    <div class="module-stat">
+                        <div class="module-stat-value">28</div>
+                        <div class="module-stat-label">Rapor</div>
+                    </div>
+                    <div class="module-stat">
+                        <div class="module-stat-value">7</div>
+                        <div class="module-stat-label">Zamanlanmış</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <button class="fab" title="Hızlı İşlem">+</button>
+    </div>
+
+    <script>
+        // Sidebar toggle for mobile
+        const fab = document.querySelector('.fab');
+        fab.addEventListener('click', () => {
+            alert('Hızlı işlem menüsü yakında eklenecek!');
+        });
+
+        // Notification badge animation
+        setInterval(() => {
+            const badge = document.querySelector('.notification-badge');
+            badge.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                badge.style.transform = 'scale(1)';
+            }, 300);
+        }, 3000);
+    </script>
+</body>
+</html>

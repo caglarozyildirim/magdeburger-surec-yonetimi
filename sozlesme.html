@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sözleşme Yönetimi - Magdeburger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="notification-btn">🔔<span class="notification-badge"></span></button>
+            <button class="user-menu">👤</button>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="sidebar-link"><span class="icon">📊</span>Dashboard</a></li>
+            </ul>
+        </div>1
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>
+            <ul class="sidebar-menu">
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon">🛒</span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link"><span class="icon">💳</span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link"><span class="icon">💰</span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link active"><span class="icon">📝</span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link"><span class="icon">📁</span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link"><span class="icon">📈</span>Raporlar & Analitik</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Sözleşme Yaşam Döngüsü Yönetimi (CLM) 📝</h1>
+            <p class="page-subtitle">OCR destekli sözleşme analizi, yenileme takibi ve compliance kontrolü</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">📄</div>
+                    <div class="stat-trend up">↑ 5%</div>
+                </div>
+                <div class="stat-value">142</div>
+                <div class="stat-label">Aktif Sözleşme</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">⏰</div>
+                    <div class="stat-trend up">↑ 2%</div>
+                </div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">30 Gün İçinde Yenilenecek</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">✓</div>
+                    <div class="stat-trend up">↑ 8%</div>
+                </div>
+                <div class="stat-value">₺3.8M</div>
+                <div class="stat-label">Toplam Sözleşme Değeri</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon red">⚠️</div>
+                    <div class="stat-trend down">↓ 1%</div>
+                </div>
+                <div class="stat-value">2</div>
+                <div class="stat-label">Compliance Uyarısı</div>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left: 4px solid var(--warning); padding: 16px 20px; border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 24px;">⚠️</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; color: var(--dark); margin-bottom: 4px;">Yenileme Hatırlatması</div>
+                <div style="font-size: 14px; color: var(--text);">Microsoft 365 lisans sözleşmesi 15 gün içinde yenilenme tarihine ulaşıyor</div>
+            </div>
+            <button style="padding: 8px 16px; background: white; border: 1px solid var(--warning); border-radius: 6px; font-weight: 600; cursor: pointer;">İncele</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+            <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="color: var(--dark);">Aktif Sözleşmeler</h3>
+                    <button style="padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        + Yeni Sözleşme
+                    </button>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Microsoft 365 Enterprise Lisansı</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Tedarikçi: Microsoft Türkiye • Süre: 12 Ay</div>
+                        </div>
+                        <div style="text-align: right; margin: 0 20px;">
+                            <div style="font-weight: 700; color: var(--dark);">₺1,250,000</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Yıllık</div>
+                        </div>
+                        <div style="padding: 6px 12px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 12px; font-weight: 600;">15 gün</div>
+                    </div>
+
+                    <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">AWS Cloud Services Hosting</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Tedarikçi: Amazon Web Services • Süre: 36 Ay</div>
+                        </div>
+                        <div style="text-align: right; margin: 0 20px;">
+                            <div style="font-weight: 700; color: var(--dark);">₺850,000</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Yıllık</div>
+                        </div>
+                        <div style="padding: 6px 12px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 12px; font-weight: 600;">345 gün</div>
+                    </div>
+
+                    <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Siber Güvenlik Hizmet Sözleşmesi</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Tedarikçi: CyberSec Turkey • Süre: 24 Ay</div>
+                        </div>
+                        <div style="text-align: right; margin: 0 20px;">
+                            <div style="font-weight: 700; color: var(--dark);">₺450,000</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Yıllık</div>
+                        </div>
+                        <div style="padding: 6px 12px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 12px; font-weight: 600;">28 gün</div>
+                    </div>
+
+                    <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">SAP ERP Bakım ve Destek</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Tedarikçi: SAP Turkey • Süre: 12 Ay</div>
+                        </div>
+                        <div style="text-align: right; margin: 0 20px;">
+                            <div style="font-weight: 700; color: var(--dark);">₺680,000</div>
+                            <div style="font-size: 11px; color: var(--text-light);">Yıllık</div>
+                        </div>
+                        <div style="padding: 6px 12px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 12px; font-weight: 600;">198 gün</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px;">
+                    <h3 style="margin-bottom: 16px; color: var(--dark);">AI Sözleşme Analizi</h3>
+                    <div style="padding: 16px; background: linear-gradient(135deg, #e0e7ff, #dbeafe); border-radius: 8px; margin-bottom: 12px;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🤖</div>
+                        <div style="font-weight: 600; margin-bottom: 4px;">OCR + NLP Aktif</div>
+                        <div style="font-size: 13px; color: var(--text-light);">Sözleşme madde çıkarımı ve risk analizi</div>
+                    </div>
+                    <button style="width: 100%; padding: 12px; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        Sözleşme Analiz Et
+                    </button>
+                </div>
+
+                <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border);">
+                    <h3 style="margin-bottom: 16px; color: var(--dark);">Compliance Kontrolü</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #d1fae5; border-radius: 8px;">
+                            <div style="font-size: 20px;">✓</div>
+                            <div style="flex: 1; font-size: 13px; font-weight: 600;">KVKK Uyumlu</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #d1fae5; border-radius: 8px;">
+                            <div style="font-size: 20px;">✓</div>
+                            <div style="flex: 1; font-size: 13px; font-weight: 600;">ISO 27001 Uyumlu</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #fee2e2; border-radius: 8px;">
+                            <div style="font-size: 20px;">⚠️</div>
+                            <div style="flex: 1; font-size: 13px; font-weight: 600;">2 Risk Tespit Edildi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

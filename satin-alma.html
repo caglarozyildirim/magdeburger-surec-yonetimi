@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satın Alma Yönetimi - Magdeburger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            color: var(--primary);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        /* Table */
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            border: none;
+            background: none;
+            outline: none;
+            flex: 1;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg);
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        tr:hover {
+            background: var(--bg);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .priority-high {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .priority-medium {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .priority-low {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            color: var(--text);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .file-upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* AI Badge */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .ocr-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="notification-btn">
+                🔔
+                <span class="notification-badge"></span>
+            </button>
+            <button class="user-menu">👤</button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="index.html" class="sidebar-link">
+                        <span class="icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="satin-alma.html" class="sidebar-link active">
+                        <span class="icon">🛒</span>
+                        Satın Alma
+                        <span class="badge badge-warning">12</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="masraf-fatura.html" class="sidebar-link">
+                        <span class="icon">💳</span>
+                        Masraf & Fatura
+                        <span class="badge badge-danger">8</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="butce.html" class="sidebar-link">
+                        <span class="icon">💰</span>
+                        Bütçe Yönetimi
+                    </a>
+                </li>
+                <li>
+                    <a href="sozlesme.html" class="sidebar-link">
+                        <span class="icon">📝</span>
+                        Sözleşme Yönetimi
+                        <span class="badge badge-warning">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="dokuman.html" class="sidebar-link">
+                        <span class="icon">📁</span>
+                        Doküman Yönetimi
+                    </a>
+                </li>
+                <li>
+                    <a href="raporlar.html" class="sidebar-link">
+                        <span class="icon">📈</span>
+                        Raporlar & Analitik
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Yönetim</div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <span class="icon">⚙️</span>
+                        Ayarlar
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-link">
+                        <span class="icon">👥</span>
+                        Kullanıcılar
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Satın Alma Yönetimi <span class="ai-badge">✨ AI Destekli</span> <span class="ocr-badge">📄 OCR Aktif</span></h1>
+            <p class="page-subtitle">Akıllı satın alma süreçleri, teklif karşılaştırma ve onay yönetimi</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">⏳</div>
+                    <div class="stat-trend up">↑ 12%</div>
+                </div>
+                <div class="stat-value">24</div>
+                <div class="stat-label">Bekleyen Talepler</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">📋</div>
+                    <div class="stat-trend up">↑ 8%</div>
+                </div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Teklif Değerlendirmede</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">✓</div>
+                    <div class="stat-trend up">↑ 15%</div>
+                </div>
+                <div class="stat-value">156</div>
+                <div class="stat-label">Bu Ayki Onaylanan</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon red">₺</div>
+                    <div class="stat-trend down">↓ 5%</div>
+                </div>
+                <div class="stat-value">₺1.2M</div>
+                <div class="stat-label">Bu Ayki Toplam Tutar</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="all">Tümü</button>
+            <button class="tab" data-tab="pending">Bekleyen <span style="background: #fef3c7; padding: 2px 8px; border-radius: 10px; margin-left: 4px;">24</span></button>
+            <button class="tab" data-tab="evaluation">Değerlendirmede <span style="background: #dbeafe; padding: 2px 8px; border-radius: 10px; margin-left: 4px;">12</span></button>
+            <button class="tab" data-tab="approved">Onaylanan</button>
+            <button class="tab" data-tab="rejected">Reddedilen</button>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Talep ara..." id="searchInput">
+                </div>
+                <button class="btn btn-primary" onclick="openNewRequestModal()">
+                    + Yeni Satın Alma Talebi
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Talep No</th>
+                        <th>Talep Başlığı</th>
+                        <th>Talep Eden</th>
+                        <th>Kategori</th>
+                        <th>Tutar</th>
+                        <th>Öncelik</th>
+                        <th>Durum</th>
+                        <th>Tarih</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsTable">
+                    <tr>
+                        <td><strong>SA-2025-0124</strong></td>
+                        <td>Microsoft 365 Lisans Yenileme</td>
+                        <td>Ahmet Yılmaz</td>
+                        <td>Yazılım Lisansı</td>
+                        <td><strong>₺125,000</strong></td>
+                        <td><span class="priority-high">Yüksek</span></td>
+                        <td><span class="status-badge status-pending">Bekliyor</span></td>
+                        <td>10.11.2025</td>
+                        <td>
+                            <button class="action-btn" onclick="viewRequest('SA-2025-0124')">Görüntüle</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>SA-2025-0123</strong></td>
+                        <td>Sunucu Donanım Alımı</td>
+                        <td>Mehmet Kaya</td>
+                        <td>Donanım</td>
+                        <td><strong>₺450,000</strong></td>
+                        <td><span class="priority-high">Yüksek</span></td>
+                        <td><span class="status-badge status-in-progress">Değerlendirmede <span class="ai-badge" style="margin-left: 4px;">AI</span></span></td>
+                        <td>09.11.2025</td>
+                        <td>
+                            <button class="action-btn" onclick="viewRequest('SA-2025-0123')">Görüntüle</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>SA-2025-0122</strong></td>
+                        <td>Ofis Mobilya Alımı</td>
+                        <td>Ayşe Demir</td>
+                        <td>Mobilya</td>
+                        <td><strong>₺75,000</strong></td>
+                        <td><span class="priority-medium">Orta</span></td>
+                        <td><span class="status-badge status-approved">Onaylandı</span></td>
+                        <td>08.11.2025</td>
+                        <td>
+                            <button class="action-btn" onclick="viewRequest('SA-2025-0122')">Görüntüle</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>SA-2025-0121</strong></td>
+                        <td>Yazıcı Kartuş Alımı</td>
+                        <td>Can Öztürk</td>
+                        <td>Sarf Malzeme</td>
+                        <td><strong>₺12,500</strong></td>
+                        <td><span class="priority-low">Düşük</span></td>
+                        <td><span class="status-badge status-approved">Onaylandı</span></td>
+                        <td>07.11.2025</td>
+                        <td>
+                            <button class="action-btn" onclick="viewRequest('SA-2025-0121')">Görüntüle</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>SA-2025-0120</strong></td>
+                        <td>CRM Yazılımı Lisansı</td>
+                        <td>Zeynep Yıldız</td>
+                        <td>Yazılım Lisansı</td>
+                        <td><strong>₺280,000</strong></td>
+                        <td><span class="priority-high">Yüksek</span></td>
+                        <td><span class="status-badge status-in-progress">Değerlendirmede</span></td>
+                        <td>06.11.2025</td>
+                        <td>
+                            <button class="action-btn" onclick="viewRequest('SA-2025-0120')">Görüntüle</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- New Request Modal -->
+    <div class="modal" id="newRequestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Yeni Satın Alma Talebi</h3>
+                <button class="modal-close" onclick="closeNewRequestModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="newRequestForm">
+                    <div class="form-group">
+                        <label class="form-label">Talep Başlığı *</label>
+                        <input type="text" class="form-input" placeholder="Örn: Microsoft 365 Lisans Yenileme" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Kategori *</label>
+                        <select class="form-select" required>
+                            <option value="">Kategori seçin</option>
+                            <option value="software">Yazılım Lisansı</option>
+                            <option value="hardware">Donanım</option>
+                            <option value="furniture">Mobilya</option>
+                            <option value="supply">Sarf Malzeme</option>
+                            <option value="service">Hizmet</option>
+                            <option value="other">Diğer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Talep Açıklaması *</label>
+                        <textarea class="form-textarea" placeholder="Satın alma talebinizin detaylarını açıklayın..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tahmini Tutar (₺)</label>
+                        <input type="number" class="form-input" placeholder="Örn: 125000">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Bütçe Kalemi *</label>
+                        <select class="form-select" required>
+                            <option value="">Bütçe kalemi seçin</option>
+                            <option value="bt-yazilim">BT - Yazılım Lisansları</option>
+                            <option value="bt-donanim">BT - Donanım</option>
+                            <option value="genel-idari">Genel İdari Giderler</option>
+                            <option value="pazarlama">Pazarlama</option>
+                            <option value="egitim">Eğitim</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Öncelik *</label>
+                        <select class="form-select" required>
+                            <option value="">Öncelik seçin</option>
+                            <option value="high">Yüksek</option>
+                            <option value="medium">Orta</option>
+                            <option value="low">Düşük</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Teklif / Proforma Belgesi (OCR Destekli)</label>
+                        <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                            <div class="file-upload-icon">📄</div>
+                            <div><strong>Belge yüklemek için tıklayın</strong></div>
+                            <div style="font-size: 12px; color: var(--text-light); margin-top: 8px;">
+                                PDF, JPEG, PNG desteklenir • OCR ile otomatik veri çıkarımı yapılır
+                            </div>
+                        </div>
+                        <input type="file" id="fileInput" style="display: none;" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeNewRequestModal()">İptal</button>
+                <button class="btn btn-primary" onclick="submitNewRequest()">Talep Oluştur</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openNewRequestModal() {
+            document.getElementById('newRequestModal').classList.add('active');
+        }
+
+        function closeNewRequestModal() {
+            document.getElementById('newRequestModal').classList.remove('active');
+        }
+
+        function submitNewRequest() {
+            alert('Talep başarıyla oluşturuldu! OCR motoru belgeleri işliyor...');
+            closeNewRequestModal();
+        }
+
+        function viewRequest(requestId) {
+            alert('Talep detayı: ' + requestId + '\n\nBu sayfada teklif karşılaştırma, AI önerileri ve onay süreci gösterilecek.');
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#requestsTable tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // File upload handler
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                const fileNames = Array.from(files).map(f => f.name).join(', ');
+                alert(`${files.length} dosya seçildi:\n${fileNames}\n\nOCR motoru dosyaları otomatik olarak işleyecek.`);
+            }
+        });
+    </script>
+</body>
+</html>

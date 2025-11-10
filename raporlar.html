@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raporlar & Analitik - Magdeburger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="notification-btn">🔔<span class="notification-badge"></span></button>
+            <button class="user-menu">👤</button>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="sidebar-link"><span class="icon">📊</span>Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>
+            <ul class="sidebar-menu">
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon">🛒</span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link"><span class="icon">💳</span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link"><span class="icon">💰</span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon">📝</span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link"><span class="icon">📁</span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link active"><span class="icon">📈</span>Raporlar & Analitik</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Raporlar & Analitik 📈</h1>
+            <p class="page-subtitle">KPI tabanlı dashboard, AI destekli anomali tespiti ve dinamik raporlama</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">📊</div>
+                    <div class="stat-trend up">↑ 18%</div>
+                </div>
+                <div class="stat-value">28</div>
+                <div class="stat-label">Aktif Rapor</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">⏰</div>
+                    <div class="stat-trend up">↑ 12%</div>
+                </div>
+                <div class="stat-value">7</div>
+                <div class="stat-label">Zamanlanmış Rapor</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">🤖</div>
+                    <div class="stat-trend up">↑ 24%</div>
+                </div>
+                <div class="stat-value">142</div>
+                <div class="stat-label">AI Analiz (Bu Ay)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon red">⚠️</div>
+                    <div class="stat-trend down">↓ 5%</div>
+                </div>
+                <div class="stat-value">8</div>
+                <div class="stat-label">Anomali Tespit Edildi</div>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px;">
+            <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h3 style="color: var(--dark); margin-bottom: 4px;">Aylık Harcama Trendi</h3>
+                        <p style="font-size: 13px; color: var(--text-light);">Son 12 ay karşılaştırmalı analiz</p>
+                    </div>
+                    <button style="padding: 8px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">Excel İndir</button>
+                </div>
+                <div style="height: 280px; display: flex; align-items: flex-end; gap: 8px;">
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 65%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 72%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 58%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 88%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 75%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #f59e0b, #fbbf24); height: 92%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #ef4444, #f87171); height: 98%; border-radius: 6px 6px 0 0; position: relative;">
+                        <div style="position: absolute; top: -28px; left: 50%; transform: translateX(-50%); background: #ef4444; color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;">⚠️ Yüksek</div>
+                    </div>
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 85%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 78%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 68%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #0066cc, #3b82f6); height: 82%; border-radius: 6px 6px 0 0;"></div>
+                    <div style="flex: 1; background: linear-gradient(to top, #10b981, #34d399); height: 62%; border-radius: 6px 6px 0 0;"></div>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 20px; color: var(--dark);">AI Anomali Tespiti</h3>
+                <div style="padding: 16px; background: linear-gradient(135deg, #fee2e2, #fecaca); border-radius: 8px; border-left: 4px solid var(--danger); margin-bottom: 12px;">
+                    <div style="font-weight: 600; color: var(--dark); margin-bottom: 8px;">⚠️ Yinelenen Fatura</div>
+                    <div style="font-size: 13px; color: var(--text); margin-bottom: 4px;">Aynı fatura 2 kez sisteme girilmiş</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Fatura No: INV-2025-12456</div>
+                </div>
+                <div style="padding: 16px; background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 8px; border-left: 4px solid var(--warning); margin-bottom: 12px;">
+                    <div style="font-weight: 600; color: var(--dark); margin-bottom: 8px;">⚡ Sıra Dışı Harcama</div>
+                    <div style="font-size: 13px; color: var(--text); margin-bottom: 4px;">Normal ortalamanın %240 üzerinde</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Departman: BT - Donanım</div>
+                </div>
+                <div style="padding: 16px; background: linear-gradient(135deg, #dbeafe, #bfdbfe); border-radius: 8px; border-left: 4px solid var(--info); margin-bottom: 12px;">
+                    <div style="font-weight: 600; color: var(--dark); margin-bottom: 8px;">📋 Benzer Sözleşme</div>
+                    <div style="font-size: 13px; color: var(--text); margin-bottom: 4px;">3 benzer sözleşme hükmü tespit edildi</div>
+                    <div style="font-size: 11px; color: var(--text-light);">Sözleşme: SAP-ERP-2025</div>
+                </div>
+                <button style="width: 100%; padding: 12px; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    Tüm Anomalileri Görüntüle
+                </button>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 24px;">
+            <h3 style="margin-bottom: 20px; color: var(--dark);">Hazır Raporlar</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+                <div style="padding: 20px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div style="width: 48px; height: 48px; background: #dbeafe; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">📊</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Bütçe Kullanım Raporu</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Departman bazlı analiz</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button style="flex: 1; padding: 8px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Görüntüle</button>
+                        <button style="padding: 8px 12px; background: var(--bg); border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">📥</button>
+                    </div>
+                </div>
+
+                <div style="padding: 20px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div style="width: 48px; height: 48px; background: #d1fae5; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">💳</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Masraf Özet Raporu</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Aylık harcama dağılımı</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button style="flex: 1; padding: 8px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Görüntüle</button>
+                        <button style="padding: 8px 12px; background: var(--bg); border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">📥</button>
+                    </div>
+                </div>
+
+                <div style="padding: 20px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div style="width: 48px; height: 48px; background: #fef3c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">📝</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Sözleşme Durum Raporu</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Yenileme ve süre takibi</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button style="flex: 1; padding: 8px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Görüntüle</button>
+                        <button style="padding: 8px 12px; background: var(--bg); border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">📥</button>
+                    </div>
+                </div>
+
+                <div style="padding: 20px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div style="width: 48px; height: 48px; background: #fce7f3; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🛒</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Satın Alma Performans</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Tedarikçi ve süreç analizi</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button style="flex: 1; padding: 8px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Görüntüle</button>
+                        <button style="padding: 8px 12px; background: var(--bg); border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">📥</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #e0e7ff, #dbeafe); padding: 32px; border-radius: 16px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 16px;">🤖</div>
+            <h3 style="margin-bottom: 12px; color: var(--dark);">AI Destekli Özel Rapor Oluştur</h3>
+            <p style="color: var(--text-light); margin-bottom: 20px;">Doğal dil ile rapor talep edin, AI sizin için özelleştirilmiş analiz hazırlasın</p>
+            <button style="padding: 14px 32px; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 15px;">
+                Özel Rapor Oluştur
+            </button>
+        </div>
+    </main>
+</body>
+</html>

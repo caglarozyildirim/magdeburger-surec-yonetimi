@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masraf & Fatura Yönetimi - Magdeburger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="notification-btn">🔔<span class="notification-badge"></span></button>
+            <button class="user-menu">👤</button>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>1
+            <ul class="sidebar-menu">1
+                <li><a href="index.html" class="sidebar-link"><span class="icon">📊</span>Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>
+            <ul class="sidebar-menu">
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon">🛒</span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link active"><span class="icon">💳</span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link"><span class="icon">💰</span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon">📝</span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link"><span class="icon">📁</span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link"><span class="icon">📈</span>Raporlar & Analitik</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Masraf & Fatura Yönetimi 💳</h1>
+            <p class="page-subtitle">OCR destekli fatura okuma ve AI tabanlı masraf kategorilendirme</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">⏳</div>
+                    <div class="stat-trend up">↑ 5%</div>
+                </div>
+                <div class="stat-value">18</div>
+                <div class="stat-label">Bekleyen Masraf Talebi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">✓</div>
+                    <div class="stat-trend up">↑ 12%</div>
+                </div>
+                <div class="stat-value">₺456.8K</div>
+                <div class="stat-label">Bu Ayki Toplam Masraf</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">📄</div>
+                    <div class="stat-trend up">↑ 8%</div>
+                </div>
+                <div class="stat-value">247</div>
+                <div class="stat-label">OCR İle İşlenen Fatura</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon red">⚠️</div>
+                    <div class="stat-trend down">↓ 2%</div>
+                </div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Anomali Tespit Edildi</div>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; margin-top: 32px;">
+            <div style="font-size: 64px; margin-bottom: 16px;">📱</div>
+            <h2 style="margin-bottom: 12px; color: var(--dark);">Masraf Talep Sistemi</h2>
+            <p style="color: var(--text-light); margin-bottom: 24px;">Mobil cihazdan fatura fotoğrafı yükleyerek, OCR ile otomatik masraf formu oluşturun</p>
+            <button style="padding: 12px 32px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                + Yeni Masraf Talebi Oluştur
+            </button>
+            <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; text-align: left;">
+                <div style="padding: 16px; background: #f0f9ff; border-radius: 8px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">📸</div>
+                    <div style="font-weight: 600; color: var(--dark);">OCR Tanıma</div>
+                    <div style="font-size: 13px; color: var(--text-light);">Fatura bilgileri otomatik çıkarılır</div>
+                </div>
+                <div style="padding: 16px; background: #f0fdf4; border-radius: 8px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">🤖</div>
+                    <div style="font-weight: 600; color: var(--dark);">AI Kategor</div>
+                    <div style="font-size: 13px; color: var(--text-light);">Otomatik masraf sınıflandırma</div>
+                </div>
+                <div style="padding: 16px; background: #fef3c7; border-radius: 8px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">✅</div>
+                    <div style="font-weight: 600; color: var(--dark);">Dinamik Onay</div>
+                    <div style="font-size: 13px; color: var(--text-light);">Tutara göre akışkan onay zinciri</div>
+                </div>
+                <div style="padding: 16px; background: #fce7f3; border-radius: 8px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">💰</div>
+                    <div style="font-weight: 600; color: var(--dark);">Otomatik Bütçe</div>
+                    <div style="font-size: 13px; color: var(--text-light);">Onay sonrası bütçe güncelleme</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

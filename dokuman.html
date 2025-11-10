@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doküman Yönetimi - Magdeburger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="notification-btn">🔔<span class="notification-badge"></span></button>
+            <button class="user-menu">👤</button>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="sidebar-link"><span class="icon">📊</span>Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>
+            <ul class="sidebar-menu">
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon">🛒</span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link"><span class="icon">💳</span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link"><span class="icon">💰</span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon">📝</span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link active"><span class="icon">📁</span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link"><span class="icon">📈</span>Raporlar & Analitik</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Doküman Yönetimi 📁</h1>
+            <p class="page-subtitle">NLP destekli doküman etiketleme, anlamsal arama ve merkezi arşiv</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon blue">📄</div>
+                    <div class="stat-trend up">↑ 15%</div>
+                </div>
+                <div class="stat-value">2,847</div>
+                <div class="stat-label">Toplam Doküman</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon green">💾</div>
+                    <div class="stat-trend up">↑ 8%</div>
+                </div>
+                <div class="stat-value">12.4GB</div>
+                <div class="stat-label">Toplam Boyut</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon orange">🏷️</div>
+                    <div class="stat-trend up">↑ 22%</div>
+                </div>
+                <div class="stat-value">156</div>
+                <div class="stat-label">AI Etiketleme (Bu Ay)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon red">🔍</div>
+                    <div class="stat-trend up">↑ 34%</div>
+                </div>
+                <div class="stat-value">1,243</div>
+                <div class="stat-label">Arama İşlemi (Bu Ay)</div>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 24px;">
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <div style="flex: 1; position: relative;">
+                    <input type="text" placeholder="Doküman ara... (NLP destekli anlamsal arama)" style="width: 100%; padding: 14px 48px 14px 20px; border: 2px solid var(--border); border-radius: 12px; font-size: 15px; font-family: 'Inter', sans-serif;">
+                    <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 24px;">🔍</div>
+                </div>
+                <button style="padding: 14px 28px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <span>+</span>
+                    <span>Doküman Yükle</span>
+                </button>
+            </div>
+            <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+                <button style="padding: 6px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Tümü</button>
+                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Faturalar</button>
+                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Sözleşmeler</button>
+                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Teklifler</button>
+                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Yazışmalar</button>
+                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Diğer</button>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="font-size: 48px; margin-bottom: 12px;">📄</div>
+                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Microsoft_Lisans_2025.pdf</div>
+                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">1.2 MB • 10.11.2025</div>
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    <span style="padding: 2px 8px; background: #dbeafe; color: var(--info); border-radius: 12px; font-size: 10px; font-weight: 600;">Sözleşme</span>
+                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">BT</span>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="font-size: 48px; margin-bottom: 12px;">📊</div>
+                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Butce_Raporu_Q2.xlsx</div>
+                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">850 KB • 09.11.2025</div>
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    <span style="padding: 2px 8px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 10px; font-weight: 600;">Rapor</span>
+                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">Finans</span>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="font-size: 48px; margin-bottom: 12px;">🖼️</div>
+                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Fatura_12345.jpg</div>
+                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">2.4 MB • 08.11.2025</div>
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    <span style="padding: 2px 8px; background: #fce7f3; color: #ec4899; border-radius: 12px; font-size: 10px; font-weight: 600;">Fatura</span>
+                    <span style="padding: 2px 8px; background: #e0e7ff; color: #6366f1; border-radius: 12px; font-size: 10px; font-weight: 600;">OCR</span>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="font-size: 48px; margin-bottom: 12px;">📝</div>
+                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Sozlesme_SAP.pdf</div>
+                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">3.8 MB • 07.11.2025</div>
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    <span style="padding: 2px 8px; background: #dbeafe; color: var(--info); border-radius: 12px; font-size: 10px; font-weight: 600;">Sözleşme</span>
+                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">BT</span>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="font-size: 48px; margin-bottom: 12px;">💼</div>
+                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Teklif_AWS.pdf</div>
+                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">1.5 MB • 06.11.2025</div>
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    <span style="padding: 2px 8px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 10px; font-weight: 600;">Teklif</span>
+                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">BT</span>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="font-size: 48px; margin-bottom: 12px;">📧</div>
+                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Yazisma_Vergi_Dairesi.pdf</div>
+                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">680 KB • 05.11.2025</div>
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    <span style="padding: 2px 8px; background: #fee2e2; color: var(--danger); border-radius: 12px; font-size: 10px; font-weight: 600;">Yazışma</span>
+                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">Finans</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #e0e7ff, #dbeafe); padding: 32px; border-radius: 16px; margin-top: 32px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 16px;">🤖</div>
+            <h3 style="margin-bottom: 12px; color: var(--dark);">AI Destekli Doküman İşleme</h3>
+            <p style="color: var(--text-light); margin-bottom: 20px;">NLP motoru ile otomatik etiketleme, anlamsal arama ve KVKK uyumlu veri maskeleme</p>
+            <div style="display: flex; justify-content: center; gap: 32px; margin-top: 24px;">
+                <div>
+                    <div style="font-size: 32px; font-weight: 700; color: var(--primary);">98%</div>
+                    <div style="font-size: 13px; color: var(--text-light);">OCR Doğruluk Oranı</div>
+                </div>
+                <div>
+                    <div style="font-size: 32px; font-weight: 700; color: var(--primary);">2.4s</div>
+                    <div style="font-size: 13px; color: var(--text-light);">Ortalama İşlem Süresi</div>
+                </div>
+                <div>
+                    <div style="font-size: 32px; font-weight: 700; color: var(--primary);">100%</div>
+                    <div style="font-size: 13px; color: var(--text-light);">KVKK Uyumlu</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
