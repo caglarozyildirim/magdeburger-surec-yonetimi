@@ -363,7 +363,16 @@
 
                     <div class="form-group">
                         <label class="form-label">Tedarikçi/Satıcı</label>
-                        <input type="text" class="form-input" id="vendor" placeholder="Tedarikçi adı">
+                        <select class="form-select" id="vendor">
+                            <option value="">Tedarikçi seçin (opsiyonel)</option>
+                            <option value="TechSource A.Ş.">TechSource A.Ş.</option>
+                            <option value="GlobalTech Ltd.">GlobalTech Ltd.</option>
+                            <option value="OfficeSupply Pro">OfficeSupply Pro</option>
+                            <option value="BudgetSupplies Inc.">BudgetSupplies Inc.</option>
+                            <option value="QuickTech Solutions">QuickTech Solutions</option>
+                            <option value="other">Diğer (Manuel Giriş)</option>
+                        </select>
+                        <input type="text" class="form-input" id="vendorOther" placeholder="Tedarikçi adını girin" style="display: none; margin-top: 12px;">
                     </div>
 
                     <div class="form-group">
@@ -415,10 +424,24 @@
             document.getElementById('expenseDate').valueAsDate = new Date();
         }
 
+        // Vendor dropdown handler
+        document.getElementById('vendor').addEventListener('change', function(e) {
+            const vendorOtherInput = document.getElementById('vendorOther');
+            if (e.target.value === 'other') {
+                vendorOtherInput.style.display = 'block';
+                vendorOtherInput.required = true;
+            } else {
+                vendorOtherInput.style.display = 'none';
+                vendorOtherInput.required = false;
+                vendorOtherInput.value = '';
+            }
+        });
+
         function closeExpenseModal() {
             document.getElementById('expenseModal').classList.remove('active');
             document.getElementById('expenseForm').reset();
             document.getElementById('fileList').innerHTML = '';
+            document.getElementById('vendorOther').style.display = 'none';
         }
 
         function submitExpense() {
@@ -429,6 +452,11 @@
                 return;
             }
 
+            const vendorSelect = document.getElementById('vendor');
+            const vendorValue = vendorSelect.value === 'other'
+                ? document.getElementById('vendorOther').value
+                : vendorSelect.value;
+
             const formData = {
                 type: document.getElementById('expenseType').value,
                 description: document.getElementById('description').value,
@@ -436,7 +464,7 @@
                 date: document.getElementById('expenseDate').value,
                 budgetItem: document.getElementById('budgetItem').value,
                 invoiceNumber: document.getElementById('invoiceNumber').value,
-                vendor: document.getElementById('vendor').value,
+                vendor: vendorValue,
                 notes: document.getElementById('notes').value
             };
 
