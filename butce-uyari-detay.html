@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bütçe Uyarı Detayı - Magdeburger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <style>
+        /* Role Selector */
+        .role-selector {
+            position: relative;
+            margin-right: 16px;
+        }
+
+        .role-badge {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .role-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .role-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 8px;
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .role-dropdown.active {
+            display: block;
+        }
+
+        .role-option {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-option:hover {
+            background: var(--bg);
+        }
+
+        .role-option.selected {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 3px solid var(--primary);
+        }
+
+        .role-option-icon {
+            font-size: 20px;
+        }
+
+        .role-option-text {
+            flex: 1;
+        }
+
+        .role-option-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--dark);
+        }
+
+        .role-option-desc {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* Detail Page Styles */
+        .detail-header {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .detail-header.critical {
+            border-left: 4px solid var(--danger);
+            background: linear-gradient(135deg, #fef2f2, white);
+        }
+
+        .detail-header.warning {
+            border-left: 4px solid var(--warning);
+            background: linear-gradient(135deg, #fef3c7, white);
+        }
+
+        .detail-header.info {
+            border-left: 4px solid var(--primary);
+            background: linear-gradient(135deg, #f0f9ff, white);
+        }
+
+        .detail-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .detail-icon {
+            font-size: 48px;
+        }
+
+        .detail-title-text h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .detail-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .info-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .info-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            padding: 16px;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .info-value.large {
+            font-size: 32px;
+        }
+
+        .info-value.danger {
+            color: var(--danger);
+        }
+
+        .info-value.warning {
+            color: var(--warning);
+        }
+
+        .info-value.success {
+            color: var(--success);
+        }
+
+        .list-section {
+            margin-top: 24px;
+        }
+
+        .list-item {
+            padding: 16px;
+            background: var(--bg);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .list-item-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .list-item-desc {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .action-section {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-top: 24px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .timeline {
+            margin-top: 20px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 40px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background: var(--border);
+        }
+
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .timeline-dot.danger {
+            background: #fef2f2;
+            color: var(--danger);
+        }
+
+        .timeline-dot.warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .timeline-dot.success {
+            background: #dcfce7;
+            color: var(--success);
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 8px;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: all 0.2s;
+        }
+
+        .back-button:hover {
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="role-selector">
+                <button class="role-badge" id="roleButton" onclick="toggleRoleDropdown()">
+                    <span id="currentRole">👤 Çalışan</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+                <div class="role-dropdown" id="roleDropdown">
+                    <div class="role-option selected" onclick="selectRole('employee')">
+                        <div class="role-option-icon">👤</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Çalışan</div>
+                            <div class="role-option-desc">Talep oluşturma</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('manager')">
+                        <div class="role-option-icon">👨‍💼</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Departman Müdürü</div>
+                            <div class="role-option-desc">0-5,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('director')">
+                        <div class="role-option-icon">👔</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Genel Müdür</div>
+                            <div class="role-option-desc">5,001-25,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('board')">
+                        <div class="role-option-icon">🎖️</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Yönetim Kurulu</div>
+                            <div class="role-option-desc">25,000₺+ onay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="notification-btn"><span class="icon icon-bell"></span><span class="notification-badge"></span></button>
+            <button class="user-menu"><span class="icon icon-user"></span></button>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="sidebar-link"><span class="icon icon-dashboard"></span>Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>
+            <ul class="sidebar-menu">
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon icon-cart"></span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link"><span class="icon icon-card"></span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link active"><span class="icon icon-wallet"></span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link"><span class="icon icon-document"></span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link"><span class="icon icon-folder"></span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link"><span class="icon icon-chart"></span>Raporlar & Analitik</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <a href="butce.html" class="back-button">
+            ← Bütçe Yönetimine Dön
+        </a>
+
+        <!-- Dynamic content will be loaded here -->
+        <div id="detailContent"></div>
+    </main>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleMobileMenu() {
+            mobileMenuToggle.classList.toggle('active');
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        sidebarOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Notification badge animation
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            setInterval(() => {
+                notificationBadge.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    notificationBadge.style.transform = 'scale(1)';
+                }, 300);
+            }, 3000);
+        }
+
+        // Notification button click handler
+        document.querySelector('.notification-btn').addEventListener('click', function() {
+            alert('🔔 BİLDİRİMLER\n\n' +
+                  '• 4 adet bütçe aşımı uyarısı\n' +
+                  '• BT - Yazılım Lisans kalemi %92 kullanımda\n' +
+                  '• Yıl sonu bütçe aşımı riski tespit edildi\n' +
+                  '• ERP Modernizasyonu projesi bütçe kontrolü gerekli');
+        });
+
+        // Role selector functions
+        function toggleRoleDropdown() {
+            document.getElementById('roleDropdown').classList.toggle('active');
+        }
+
+        function selectRole(role) {
+            const roleTexts = {
+                'employee': '👤 Çalışan',
+                'manager': '👨‍💼 Departman Müdürü',
+                'director': '👔 Genel Müdür',
+                'board': '🎖️ Yönetim Kurulu'
+            };
+            document.getElementById('currentRole').textContent = roleTexts[role];
+            document.getElementById('roleDropdown').classList.remove('active');
+            document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            if (role !== 'employee') {
+                window.location.href = 'masraf-onay.html';
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.role-selector')) {
+                document.getElementById('roleDropdown').classList.remove('active');
+            }
+        });
+
+        // Get alert type from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const alertType = urlParams.get('type') || 'license';
+
+        // Load detail content based on alert type
+        function loadAlertDetail(type) {
+            const detailContent = document.getElementById('detailContent');
+
+            switch(type) {
+                case 'license':
+                    detailContent.innerHTML = getLicenseDetail();
+                    break;
+                case 'admin':
+                    detailContent.innerHTML = getAdminDetail();
+                    break;
+                case 'q2forecast':
+                    detailContent.innerHTML = getQ2ForecastDetail();
+                    break;
+                case 'hardware':
+                    detailContent.innerHTML = getHardwareDetail();
+                    break;
+                default:
+                    detailContent.innerHTML = getLicenseDetail();
+            }
+        }
+
+        function getLicenseDetail() {
+            return `
+                <div class="detail-header critical">
+                    <div class="detail-title">
+                        <div class="detail-icon">🔴</div>
+                        <div class="detail-title-text">
+                            <h1>Kritik: Yazılım Lisans Bütçesi %92 Kullanımda</h1>
+                            <div class="detail-subtitle">BT Departmanı • Son Güncelleme: 2 saat önce • Acil Aksiyon Gerekli</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Mevcut Durum</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Toplam Bütçe</div>
+                            <div class="info-value">₺500,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kullanılan</div>
+                            <div class="info-value danger">₺460,000</div>
+                            <div style="font-size: 12px; color: var(--danger); margin-top: 4px; font-weight: 600;">%92</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kalan</div>
+                            <div class="info-value warning">₺40,000</div>
+                            <div style="font-size: 12px; color: var(--warning); margin-top: 4px; font-weight: 600;">%8</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Risk Seviyesi</div>
+                            <div class="info-value large danger">KRİTİK</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📅 Planlı Harcamalar</div>
+                    <div class="list-section">
+                        <div class="list-item">
+                            <div class="list-item-title">1. Microsoft 365 Yenileme - ₺25,000</div>
+                            <div class="list-item-desc">15 gün içinde ödeme gerekli • 350 kullanıcı lisansı</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-title">2. Adobe Creative Cloud - ₺22,000</div>
+                            <div class="list-item-desc">Ekim 2025 • Tasarım ekibi için 45 lisans</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-title">3. AutoCAD Lisansları - ₺18,000</div>
+                            <div class="list-item-desc">Kasım 2025 • Mühendislik departmanı için 25 lisans</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 16px; background: #fef2f2; border-radius: 8px; border-left: 3px solid var(--danger);">
+                        <strong style="color: var(--danger);">⚠️ SORUN:</strong>
+                        <div style="margin-top: 8px; color: var(--text);">Toplam planlanan harcama: ₺65,000 | Kalan bütçe: ₺40,000 | <strong>EKSİK: ₺25,000</strong></div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">💡 Önerilen Aksiyonlar</div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot danger">1</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">ACİL: ₺30,000 Ek Bütçe Tahsisi</div>
+                                <div class="timeline-desc">Finans direktöründen onay alınmalı • Yönetim kurulu toplantısında görüşülmeli</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot warning">2</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Adobe Lisanslarını 2 Aya Yay</div>
+                                <div class="timeline-desc">Ödemesi Ekim ve Kasım'a bölünebilir • Tedarikçi ile görüşülmeli</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot warning">3</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">AutoCAD İçin Alternatif Tedarikçi Araştır</div>
+                                <div class="timeline-desc">%10-15 daha uygun fiyat bulunabilir • Satın alma ile koordine et</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot success">4</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Kullanılmayan Lisansları İptal Et</div>
+                                <div class="timeline-desc">18 adet aktif olmayan lisans tespit edildi • ~₺8,000 tasarruf potansiyeli</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📈 Tahmin & Risk Analizi</div>
+                    <div style="padding: 20px; background: #fef2f2; border-radius: 8px; border: 2px solid var(--danger);">
+                        <h4 style="color: var(--danger); margin-bottom: 12px;">⚠️ KRİTİK UYARI</h4>
+                        <p style="color: var(--text); line-height: 1.6;">
+                            Aksiyon alınmazsa <strong>Ekim ayında bütçe aşımı kesin!</strong><br>
+                            Microsoft 365 lisansı yenilenmelidir, aksi takdirde tüm şirket operasyonları durabilir.<br>
+                            Öncelik: <span style="color: var(--danger); font-weight: 700;">ÇOK YÜKSEK</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <div class="info-card-title">👥 İlgili Kişiler & Aksiyon</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">SORUMLU</div>
+                            <div style="font-weight: 600; color: var(--dark);">BT Departman Müdürü</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">ONAYLAYICI</div>
+                            <div style="font-weight: 600; color: var(--dark);">Genel Müdür</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">BİLGİ</div>
+                            <div style="font-weight: 600; color: var(--dark);">Finans Direktörü</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">📧 İlgili Kişilere Bildir</button>
+                        <button class="btn btn-primary">📝 Ek Bütçe Talebi Oluştur</button>
+                        <button class="btn btn-secondary">📊 Rapor İndir (PDF)</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getAdminDetail() {
+            return `
+                <div class="detail-header warning">
+                    <div class="detail-title">
+                        <div class="detail-icon">⚠️</div>
+                        <div class="detail-title-text">
+                            <h1>Uyarı: Genel İdari Giderler %85'e Ulaştı</h1>
+                            <div class="detail-subtitle">İdari İşler • Son Güncelleme: 1 gün önce • Kontrol Gerekli</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Mevcut Durum</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Yıllık Bütçe</div>
+                            <div class="info-value">₺500,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kullanılan (9 Ay)</div>
+                            <div class="info-value warning">₺425,000</div>
+                            <div style="font-size: 12px; color: var(--warning); margin-top: 4px; font-weight: 600;">%85</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kalan (3 Ay)</div>
+                            <div class="info-value">₺75,000</div>
+                            <div style="font-size: 12px; color: var(--text-light); margin-top: 4px; font-weight: 600;">%15</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Risk Seviyesi</div>
+                            <div class="info-value large warning">DİKKAT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📅 Aylara Göre Harcama Analizi</div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: var(--bg);">
+                                <th style="padding: 12px; text-align: left;">Dönem</th>
+                                <th style="padding: 12px; text-align: right;">Harcama</th>
+                                <th style="padding: 12px; text-align: right;">Aylık Ortalama</th>
+                                <th style="padding: 12px; text-align: right;">Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Q1 (Ocak-Mart)</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺138,000</td>
+                                <td style="padding: 12px; text-align: right;">₺46,000/ay</td>
+                                <td style="padding: 12px; text-align: right; color: var(--success);">↓ Normal</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Q2 (Nisan-Haziran)</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺156,000</td>
+                                <td style="padding: 12px; text-align: right;">₺52,000/ay</td>
+                                <td style="padding: 12px; text-align: right; color: var(--warning);">↑ Yüksek</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Q3 (Temmuz-Eylül)</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺131,000</td>
+                                <td style="padding: 12px; text-align: right;">₺43,667/ay</td>
+                                <td style="padding: 12px; text-align: right; color: var(--success);">↓ Düşük</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: var(--bg); font-weight: 700;">
+                                <td style="padding: 12px;">9 Aylık Ortalama</td>
+                                <td style="padding: 12px; text-align: right;">₺425,000</td>
+                                <td style="padding: 12px; text-align: right;">₺47,222/ay</td>
+                                <td style="padding: 12px; text-align: right; color: var(--warning);">↑ +8%</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">⚠️ Risk Analizi</div>
+                    <div style="padding: 20px; background: #fef3c7; border-radius: 8px; border-left: 3px solid var(--warning);">
+                        <div style="display: grid; gap: 12px;">
+                            <div><strong>Kalan 3 ay için gerekli:</strong> ~₺153,000 (aylık ₺51,000)</div>
+                            <div><strong>Mevcut bütçe:</strong> ₺75,000</div>
+                            <div style="color: var(--danger); font-weight: 700; font-size: 18px; margin-top: 8px;">
+                                EKSİK: ₺78,000 (%104 aşım riski)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">💡 Öneriler & Aksiyon Planı</div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot danger">1</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Zorunlu Olmayan Harcamaları Ertele</div>
+                                <div class="timeline-desc">Ofis dekorasyonu ve özel etkinlik harcamaları Q1 2026'ya ertelenebilir</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot warning">2</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Ofis Malzemesi Alımını Optimize Et</div>
+                                <div class="timeline-desc">Toplu alım yaparak %15 indirim elde edilebilir • Tedarikçi ile görüş</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot warning">3</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Tedarikçi Anlaşmalarını Revize Et</div>
+                                <div class="timeline-desc">Mevcut sözleşmelerde %10 tasarruf potansiyeli var</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot success">4</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Q4 İçin Ek Bütçe Talebi Hazırla</div>
+                                <div class="timeline-desc">₺80,000 ek bütçe talebi genel müdür onayına sunulmalı</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <div class="info-card-title">👥 İlgili Kişiler & Aksiyon</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">SORUMLU</div>
+                            <div style="font-weight: 600; color: var(--dark);">İdari İşler Müdürü</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">ONAYLAYICI</div>
+                            <div style="font-weight: 600; color: var(--dark);">Genel Müdür</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">BİLGİ</div>
+                            <div style="font-weight: 600; color: var(--dark);">Tüm Departman Müdürleri</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">📧 Tasarruf Planı Gönder</button>
+                        <button class="btn btn-primary">📝 Ek Bütçe Talebi Oluştur</button>
+                        <button class="btn btn-secondary">📊 Detaylı Rapor İndir</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getQ2ForecastDetail() {
+            return `
+                <div class="detail-header warning">
+                    <div class="detail-title">
+                        <div class="detail-icon">📊</div>
+                        <div class="detail-title-text">
+                            <h1>Tahmin: Q2 Sonunda %12 Bütçe Aşımı Bekleniyor</h1>
+                            <div class="detail-subtitle">AI Tahminleme • Güven Aralığı: %87 • Model: GPT-4 Budget Forecasting</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">🤖 AI Tahmin Raporu</div>
+                    <div style="padding: 20px; background: linear-gradient(135deg, #f0f9ff, white); border-radius: 12px; border: 2px solid var(--primary);">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">MODEL</div>
+                                <div style="font-weight: 700; color: var(--primary);">GPT-4 Forecasting</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">GÜVEN ARALIĞI</div>
+                                <div style="font-weight: 700; color: var(--success);">%87</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">VERİ KAYNAĞI</div>
+                                <div style="font-weight: 700; color: var(--dark);">Son 18 Ay</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Q2 2025 Projeksiyonu</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Planlanan Bütçe</div>
+                            <div class="info-value">₺600,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Tahmini Gerçekleşen</div>
+                            <div class="info-value danger">₺672,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Fark</div>
+                            <div class="info-value warning">+₺72,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Aşım Oranı</div>
+                            <div class="info-value large danger">%12</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📈 Aylık Harcama Hızı Analizi</div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: var(--bg);">
+                                <th style="padding: 12px; text-align: left;">Ay</th>
+                                <th style="padding: 12px; text-align: right;">Hedef</th>
+                                <th style="padding: 12px; text-align: right;">Tahmin</th>
+                                <th style="padding: 12px; text-align: right;">Fark</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Nisan 2025</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺200,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--warning);">₺218,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--danger);">+₺18,000</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Mayıs 2025</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺200,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--warning);">₺228,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--danger);">+₺28,000</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Haziran 2025</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺200,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--warning);">₺226,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--danger);">+₺26,000</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: var(--bg); font-weight: 700;">
+                                <td style="padding: 12px;">TOPLAM Q2</td>
+                                <td style="padding: 12px; text-align: right;">₺600,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--danger);">₺672,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--danger);">+₺72,000</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">🔍 Ana Nedenler</div>
+                    <div class="list-section">
+                        <div class="list-item">
+                            <div class="list-item-title">1. ERP Modernizasyon Projesi Gecikmeleri (+%15)</div>
+                            <div class="list-item-desc">Planlanan 3 ay yerine 4.5 ay sürdü • Ek danışmanlık ve geliştirici maliyeti</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-title">2. Enflasyon Kaynaklı Fiyat Artışları (+%8)</div>
+                            <div class="list-item-desc">Tedarikçi fiyatları ortalama %8 arttı • Özellikle IT hizmetleri</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-title">3. Beklenmeyen IT Altyapı Yatırımı (+₺35K)</div>
+                            <div class="list-item-desc">Sunucu bakımı acil hale geldi • Öngörülemeyen teknik sorunlar</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-title">4. Danışmanlık Hizmetleri Artışı (+%12)</div>
+                            <div class="list-item-desc">Dijital dönüşüm için ek danışmanlık alındı</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">💡 AI Önerileri</div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot danger">1</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">ERP Projesini Faz Bazlı Yeniden Planla</div>
+                                <div class="timeline-desc">3. fazı Q3'e ertele • ₺40K tasarruf sağlanabilir</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot warning">2</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Acil Olmayan Harcamaları Q3'e Ertele</div>
+                                <div class="timeline-desc">Eğitim ve küçük ölçekli projeler sonraki çeyreğe kaydırılabilir</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot warning">3</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Tedarikçi Sözleşmelerinde Revizyon Yap</div>
+                                <div class="timeline-desc">Fiyat artışlarına karşı koruma maddeleri ekle</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot success">4</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">₺80,000 Ek Bütçe Talebi Hazırla</div>
+                                <div class="timeline-desc">Q2 kapanışı için acil bütçe artırımı gerekli</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot success">5</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Haftalık Bütçe Takibi Başlat</div>
+                                <div class="timeline-desc">Anlık kontrol için haftalık izleme sistemi kur</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📅 Tavsiye Edilen Aksiyon</div>
+                    <div style="padding: 20px; background: #fef3c7; border-radius: 12px; border: 2px solid var(--warning); text-align: center;">
+                        <div style="font-size: 14px; color: var(--text-light); margin-bottom: 8px;">EN GEÇ AKSİYON TARİHİ</div>
+                        <div style="font-size: 36px; font-weight: 800; color: var(--danger); margin-bottom: 12px;">15 Mayıs 2025</div>
+                        <div style="font-size: 14px; color: var(--text);">Bu tarihten sonra alınacak önlemler etkisiz olabilir</div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 16px; background: #dcfce7; border-radius: 8px;">
+                        <strong style="color: var(--success);">🎯 HEDEF:</strong>
+                        <div style="margin-top: 8px; color: var(--text);">Q2 kapanışını ₺620,000 ile sınırlamak (Kabul edilebilir %3.3 aşım)</div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <div class="info-card-title">👥 İlgili Kişiler & Aksiyon</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">SORUMLU</div>
+                            <div style="font-weight: 600; color: var(--dark);">Finans Direktörü</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">ONAYLAYICI</div>
+                            <div style="font-weight: 600; color: var(--dark);">Genel Müdür</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">BİLGİ</div>
+                            <div style="font-weight: 600; color: var(--dark);">Tüm C-Level Yöneticiler</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">📧 Acil Toplantı Planla</button>
+                        <button class="btn btn-primary">📝 Aksiyon Planı Oluştur</button>
+                        <button class="btn btn-secondary">📊 AI Raporu İndir</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getHardwareDetail() {
+            return `
+                <div class="detail-header info">
+                    <div class="detail-title">
+                        <div class="detail-icon">💡</div>
+                        <div class="detail-title-text">
+                            <h1>Bilgi: BT Donanım Bütçesi Hedef Altında</h1>
+                            <div class="detail-subtitle">BT Departmanı • Mükemmel Performans • Örnek Bütçe Yönetimi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Mevcut Durum</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Toplam Bütçe</div>
+                            <div class="info-value">₺500,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kullanılan</div>
+                            <div class="info-value success">₺340,000</div>
+                            <div style="font-size: 12px; color: var(--success); margin-top: 4px; font-weight: 600;">%68</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kalan</div>
+                            <div class="info-value">₺160,000</div>
+                            <div style="font-size: 12px; color: var(--success); margin-top: 4px; font-weight: 600;">%32</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Performans</div>
+                            <div class="info-value large success">MÜKEMMEL</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">✅ Başarılar</div>
+                    <div class="list-section">
+                        <div class="list-item">
+                            <div class="list-item-title">1. Tedarikçi Müzakereleri Başarılı → %15 Maliyet Tasarrufu</div>
+                            <div class="list-item-desc">3 tedarikçiyle rekabetçi teklif alındı • En uygun fiyatlar belirlendi</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-title">2. Toplu Alım Stratejisi Uygulandı → %12 İndirim</div>
+                            <div class="list-item-desc">Yıllık ihtiyaçlar önceden planlandı • Toplu alımla indirim sağlandı</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-title">3. Alternatif Tedarikçiler Bulundu → Daha Rekabetçi Fiyatlar</div>
+                            <div class="list-item-desc">Yeni tedarikçilerle çalışmaya başlandı • Fiyat avantajı sağlandı</div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-item-title">4. Alım Planlaması Optimize Edildi → Gereksiz Harcamalar Engellendi</div>
+                            <div class="list-item-desc">İhtiyaç analizi detaylı yapıldı • Sadece gerekli alımlar gerçekleştirildi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📈 Çeyrek Dönem Harcama Detayı</div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: var(--bg);">
+                                <th style="padding: 12px; text-align: left;">Çeyrek</th>
+                                <th style="padding: 12px; text-align: right;">Planlanan</th>
+                                <th style="padding: 12px; text-align: right;">Gerçekleşen</th>
+                                <th style="padding: 12px; text-align: right;">Tasarruf</th>
+                                <th style="padding: 12px; text-align: right;">Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Q1</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺150,000</td>
+                                <td style="padding: 12px; text-align: right;">₺125,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--success);">₺25,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--success);">✓</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Q2</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺140,000</td>
+                                <td style="padding: 12px; text-align: right;">₺115,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--success);">₺25,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--success);">✓</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px;"><strong>Q3</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺130,000</td>
+                                <td style="padding: 12px; text-align: right;">₺100,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--success);">₺30,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--success);">✓</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border); background: #f0f9ff;">
+                                <td style="padding: 12px;"><strong>Q4</strong></td>
+                                <td style="padding: 12px; text-align: right;">₺80,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--text-light);">-</td>
+                                <td style="padding: 12px; text-align: right;">Kalan: ₺160,000</td>
+                                <td style="padding: 12px; text-align: right; color: var(--primary);">Planlanıyor</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">💰 Tasarruf Analizi</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                        <div style="padding: 16px; background: #dcfce7; border-radius: 8px; border-left: 3px solid var(--success);">
+                            <div style="font-size: 12px; color: var(--text-light); margin-bottom: 4px;">Tedarikçi Müzakereleri</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--success);">₺22,000</div>
+                        </div>
+                        <div style="padding: 16px; background: #dcfce7; border-radius: 8px; border-left: 3px solid var(--success);">
+                            <div style="font-size: 12px; color: var(--text-light); margin-bottom: 4px;">Toplu Alım İndirimleri</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--success);">₺15,000</div>
+                        </div>
+                        <div style="padding: 16px; background: #dcfce7; border-radius: 8px; border-left: 3px solid var(--success);">
+                            <div style="font-size: 12px; color: var(--text-light); margin-bottom: 4px;">Alternatif Ürünler</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--success);">₺8,000</div>
+                        </div>
+                        <div style="padding: 16px; background: #dcfce7; border-radius: 8px; border-left: 3px solid var(--success);">
+                            <div style="font-size: 12px; color: var(--text-light); margin-bottom: 4px;">Stok Optimizasyonu</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--success);">₺5,000</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #dcfce7, white); border-radius: 12px; text-align: center; border: 2px solid var(--success);">
+                        <div style="font-size: 14px; color: var(--text-light); margin-bottom: 8px;">TOPLAM TASARRUF</div>
+                        <div style="font-size: 48px; font-weight: 800; color: var(--success);">₺50,000</div>
+                        <div style="font-size: 14px; color: var(--success); margin-top: 8px; font-weight: 600;">Bütçenin %10'u</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📋 Q4 Planı</div>
+                    <div style="padding: 20px; background: var(--bg); border-radius: 8px;">
+                        <div style="margin-bottom: 16px;"><strong>Kalan ₺160,000 ile yapılacaklar:</strong></div>
+                        <div style="display: grid; gap: 12px;">
+                            <div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 6px;">
+                                <span>Sunucu Yükseltmesi</span>
+                                <strong>₺80,000</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 6px;">
+                                <span>Ağ Altyapısı Güçlendirme</span>
+                                <strong>₺45,000</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 6px;">
+                                <span>Yedek Parçalar</span>
+                                <strong>₺20,000</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 12px; background: white; border-radius: 6px; border: 2px solid var(--success);">
+                                <span><strong>Reserve (Acil Durum)</strong></span>
+                                <strong style="color: var(--success);">₺15,000</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">🏆 Başarı Faktörleri</div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot success">1</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Proaktif Bütçe Yönetimi</div>
+                                <div class="timeline-desc">Önceden planlama ve düzenli takip yapıldı</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot success">2</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Etkili Tedarikçi İlişkileri</div>
+                                <div class="timeline-desc">Uzun vadeli işbirlikleri ve güçlü müzakereler</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot success">3</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Detaylı Planlama ve Takip</div>
+                                <div class="timeline-desc">Haftalık raporlama ve anlık kontrol sistemi</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot success">4</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Maliyet Farkındalığı Yüksek Ekip</div>
+                                <div class="timeline-desc">Tüm ekip üyeleri bütçe bilincine sahip</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">🎖️ Performans Değerlendirmesi</div>
+                    <div style="display: grid; gap: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg); border-radius: 8px;">
+                            <strong>Bütçe Disiplini:</strong>
+                            <div style="color: #f59e0b; font-size: 20px;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg); border-radius: 8px;">
+                            <strong>Maliyet Optimizasyonu:</strong>
+                            <div style="color: #f59e0b; font-size: 20px;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg); border-radius: 8px;">
+                            <strong>Planlama:</strong>
+                            <div style="color: #f59e0b; font-size: 20px;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: linear-gradient(135deg, #dcfce7, white); border-radius: 8px; border: 2px solid var(--success);">
+                            <strong style="font-size: 18px;">Genel Performans:</strong>
+                            <div style="color: var(--success); font-size: 24px; font-weight: 800;">MÜKEMMEL</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <div class="info-card-title">👥 İlgili Kişiler & Takdir</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                        <div style="padding: 12px; background: #dcfce7; border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">SORUMLU</div>
+                            <div style="font-weight: 600; color: var(--success);">BT Departman Müdürü 🏆</div>
+                            <div style="font-size: 11px; color: var(--success); margin-top: 4px;">Tebrikler!</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">BİLGİ</div>
+                            <div style="font-weight: 600; color: var(--dark);">Genel Müdür</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <div style="font-size: 11px; color: var(--text-light); margin-bottom: 4px;">PAYLAŞ</div>
+                            <div style="font-weight: 600; color: var(--dark);">Tüm Departman Müdürleri</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">🎉 Başarı Hikayesi Paylaş</button>
+                        <button class="btn btn-primary">📧 Teşekkür Mesajı Gönder</button>
+                        <button class="btn btn-secondary">📊 Performans Raporu İndir</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load the detail content on page load
+        loadAlertDetail(alertType);
+    </script>
+</body>
+</html>

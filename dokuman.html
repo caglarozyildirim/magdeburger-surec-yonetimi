@@ -7,6 +7,408 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
+    <style>
+        /* Role Selector */
+        .role-selector {
+            position: relative;
+            margin-right: 16px;
+        }
+
+        .role-badge {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .role-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .role-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 8px;
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .role-dropdown.active {
+            display: block;
+        }
+
+        .role-option {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-option:hover {
+            background: var(--bg);
+        }
+
+        .role-option.selected {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 3px solid var(--primary);
+        }
+
+        .role-option-icon {
+            font-size: 20px;
+        }
+
+        .role-option-text {
+            flex: 1;
+        }
+
+        .role-option-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--dark);
+        }
+
+        .role-option-desc {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* Document Categories */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-tab:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .category-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Document Cards */
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .document-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .document-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .document-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .document-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .document-meta {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .document-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            background: var(--bg);
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .tag.ai-tag {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: var(--primary);
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .doc-btn {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .doc-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Access Badge */
+        .access-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .access-public {
+            background: #d1fae5;
+            color: #10b981;
+        }
+
+        .access-private {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .access-restricted {
+            background: #fef3c7;
+            color: #f59e0b;
+        }
+
+        /* Upload Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .file-drop-zone {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-drop-zone:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Info Banner */
+        .info-banner {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .info-banner > div:nth-child(2) {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Document Detail Modal */
+        .detail-modal .modal-content {
+            max-width: 800px;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--bg);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .detail-value {
+            font-size: 13px;
+            color: var(--dark);
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+    </style>
 </head>
 <body>
     <div class="topbar">
@@ -24,6 +426,42 @@
             </div>
         </div>
         <div class="topbar-right">
+            <div class="role-selector">
+                <button class="role-badge" id="roleButton" onclick="toggleRoleDropdown()">
+                    <span id="currentRole">👤 Çalışan</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+                <div class="role-dropdown" id="roleDropdown">
+                    <div class="role-option selected" onclick="selectRole('employee')">
+                        <div class="role-option-icon">👤</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Çalışan</div>
+                            <div class="role-option-desc">Talep oluşturma</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('manager')">
+                        <div class="role-option-icon">👨‍💼</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Departman Müdürü</div>
+                            <div class="role-option-desc">0-5,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('director')">
+                        <div class="role-option-icon">👔</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Genel Müdür</div>
+                            <div class="role-option-desc">5,001-25,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('board')">
+                        <div class="role-option-icon">🎖️</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Yönetim Kurulu</div>
+                            <div class="role-option-desc">25,000₺+ onay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button class="notification-btn"><span class="icon icon-bell"></span><span class="notification-badge"></span></button>
             <button class="user-menu"><span class="icon icon-user"></span></button>
         </div>
@@ -54,8 +492,8 @@
 
     <main class="main-content">
         <div class="page-header">
-            <h1 class="page-title">Doküman Yönetimi <span class="icon icon-folder"></span></h1>
-            <p class="page-subtitle">NLP destekli doküman etiketleme, anlamsal arama ve merkezi arşiv</p>
+            <h1 class="page-title">Doküman ve Bilgi Yönetimi <span class="icon icon-folder"></span></h1>
+            <p class="page-subtitle">NLP destekli etiketleme • Anlamsal arama • AI veri maskeleme • Dijital imza</p>
         </div>
 
         <div class="stats-grid">
@@ -73,7 +511,7 @@
                     <div class="stat-trend up">↑ 8%</div>
                 </div>
                 <div class="stat-value">12.4GB</div>
-                <div class="stat-label">Toplam Boyut</div>
+                <div class="stat-label">Arşiv Boyutu</div>
             </div>
             <div class="stat-card">
                 <div class="stat-header">
@@ -85,120 +523,347 @@
             </div>
             <div class="stat-card">
                 <div class="stat-header">
-                    <div class="stat-icon red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
-                    <div class="stat-trend up">↑ 34%</div>
+                    <div class="stat-icon red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg></div>
+                    <div class="stat-trend up">↑ 100%</div>
                 </div>
-                <div class="stat-value">1,243</div>
-                <div class="stat-label">Arama İşlemi (Bu Ay)</div>
+                <div class="stat-value">347</div>
+                <div class="stat-label">Maskelenmiş Veri</div>
             </div>
         </div>
 
+        <div class="info-banner">
+            <div style="font-size: 24px;">🔒</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; margin-bottom: 4px;">KVKK Uyumlu Veri Maskeleme Aktif</div>
+                <div style="font-size: 13px; color: var(--text);">TC Kimlik, IBAN, adres ve kişisel veriler AI ile otomatik maskeleniyor</div>
+            </div>
+            <button style="padding: 8px 16px; background: white; border: 1px solid var(--primary); border-radius: 6px; font-weight: 600; cursor: pointer;" onclick="alert('✓ KVKK Uyumluluk Detayları\n\n• Tüm kişisel veriler AI ile otomatik tespit edilir\n• TC Kimlik: ***-**-1234 formatında maskelenir\n• IBAN: TR** **** **** **** ***1234 formatında maskelenir\n• Adres bilgileri: Sadece ilk ve son kelime görünür\n• E-posta: ilk3harf***@domain.com formatında maskelenir\n• Telefon: 0(5**)***-**34 formatında maskelenir\n\n• Erişim Loglama: Her doküman erişimi kayıt altına alınır\n• Role-based Access: Kullanıcı rolüne göre erişim kontrolü\n• Dijital İmza: e-imza ve mobil imza desteği\n• Audit Trail: Tüm işlemler denetim kaydı tutuluyor')">Detaylar</button>
+        </div>
+
+        <!-- Search Bar -->
         <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 24px;">
-            <div style="display: flex; gap: 16px; align-items: center;">
+            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
                 <div style="flex: 1; position: relative;">
-                    <input type="text" placeholder="Doküman ara... (NLP destekli anlamsal arama)" style="width: 100%; padding: 14px 48px 14px 20px; border: 2px solid var(--border); border-radius: 12px; font-size: 15px; font-family: 'Inter', sans-serif;">
+                    <input type="text" id="searchInput" placeholder="🔍 Anlamsal arama... Örn: 'geçen ay microsoft ile yapılan sözleşme' veya 'bütçe aşımı raporları'" style="width: 100%; padding: 14px 48px 14px 20px; border: 2px solid var(--border); border-radius: 12px; font-size: 15px; font-family: 'Inter', sans-serif;" oninput="performSemanticSearch(this.value)">
                     <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
                 </div>
-                <button style="padding: 14px 28px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                    <span>+</span>
-                    <span>Doküman Yükle</span>
+                <button onclick="openUploadModal()" style="padding: 14px 24px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;">
+                    📤 Doküman Yükle
                 </button>
             </div>
-            <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
-                <button style="padding: 6px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Tümü</button>
-                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Faturalar</button>
-                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Sözleşmeler</button>
-                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Teklifler</button>
-                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Yazışmalar</button>
-                <button style="padding: 6px 14px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer;">Diğer</button>
+            <div id="searchSuggestions" style="font-size: 12px; color: var(--text-light); display: none;">
+                💡 <strong>NLP Önerileri:</strong> <span id="suggestionText"></span>
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
-            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                <div style="font-size: 48px; margin-bottom: 12px;"><span class="icon icon-document" style="font-size: 48px;"></span></div>
-                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Microsoft_Lisans_2025.pdf</div>
-                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">1.2 MB • 10.11.2025</div>
-                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                    <span style="padding: 2px 8px; background: #dbeafe; color: var(--info); border-radius: 12px; font-size: 10px; font-weight: 600;">Sözleşme</span>
-                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">BT</span>
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <div class="category-tab active" onclick="filterCategory('all')">
+                📁 Tümü <span style="background: rgba(255,255,255,0.3); padding: 2px 8px; border-radius: 12px; margin-left: 6px;">2847</span>
+            </div>
+            <div class="category-tab" onclick="filterCategory('fatura')">
+                🧾 Faturalar <span style="background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 12px; margin-left: 6px;">1243</span>
+            </div>
+            <div class="category-tab" onclick="filterCategory('sozlesme')">
+                📜 Sözleşmeler <span style="background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 12px; margin-left: 6px;">142</span>
+            </div>
+            <div class="category-tab" onclick="filterCategory('teklif')">
+                💼 Teklifler <span style="background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 12px; margin-left: 6px;">387</span>
+            </div>
+            <div class="category-tab" onclick="filterCategory('yazisma')">
+                ✉️ Yazışmalar <span style="background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 12px; margin-left: 6px;">654</span>
+            </div>
+            <div class="category-tab" onclick="filterCategory('rapor')">
+                📊 Raporlar <span style="background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 12px; margin-left: 6px;">421</span>
+            </div>
+        </div>
+
+        <!-- Document Grid -->
+        <div class="document-grid" id="documentGrid">
+            <!-- Fatura -->
+            <div class="document-card" data-category="fatura">
+                <div class="document-icon" style="background: linear-gradient(135deg, #fef3c7, #fde68a);">
+                    🧾
+                </div>
+                <div class="document-title">Microsoft_Fatura_2025_01.pdf</div>
+                <div class="document-meta">📅 15 Ocak 2025 • 📦 2.4 MB • 👤 Finans Departmanı</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Fatura</span>
+                    <span class="tag ai-tag">AI: Microsoft</span>
+                    <span class="tag">Maskelenmiş</span>
+                </div>
+                <div class="access-badge access-restricted">🔐 Departman Erişimi</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('Microsoft_Fatura_2025_01.pdf')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('Microsoft_Fatura_2025_01.pdf')">⬇️ İndir</button>
                 </div>
             </div>
 
-            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                <div style="font-size: 48px; margin-bottom: 12px;"><span class="icon icon-chart" style="font-size: 48px;"></span></div>
-                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Butce_Raporu_Q2.xlsx</div>
-                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">850 KB • 09.11.2025</div>
-                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                    <span style="padding: 2px 8px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 10px; font-weight: 600;">Rapor</span>
-                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">Finans</span>
+            <!-- Sözleşme -->
+            <div class="document-card" data-category="sozlesme">
+                <div class="document-icon" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe);">
+                    📜
+                </div>
+                <div class="document-title">AWS_Hosting_Sozlesme_2023.pdf</div>
+                <div class="document-meta">📅 10 Ocak 2023 • 📦 5.8 MB • 👤 BT Departmanı</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Sözleşme</span>
+                    <span class="tag ai-tag">AI: Cloud</span>
+                    <span class="tag ai-tag">AI: 36 Ay</span>
+                    <span class="tag">Dijital İmzalı</span>
+                </div>
+                <div class="access-badge access-private">🔒 Gizli</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('AWS_Hosting_Sozlesme_2023.pdf')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('AWS_Hosting_Sozlesme_2023.pdf')">⬇️ İndir</button>
                 </div>
             </div>
 
-            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                <div style="font-size: 48px; margin-bottom: 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
-                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Fatura_12345.jpg</div>
-                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">2.4 MB • 08.11.2025</div>
-                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                    <span style="padding: 2px 8px; background: #fce7f3; color: #ec4899; border-radius: 12px; font-size: 10px; font-weight: 600;">Fatura</span>
-                    <span style="padding: 2px 8px; background: #e0e7ff; color: #6366f1; border-radius: 12px; font-size: 10px; font-weight: 600;">OCR</span>
+            <!-- Teklif -->
+            <div class="document-card" data-category="teklif">
+                <div class="document-icon" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0);">
+                    💼
+                </div>
+                <div class="document-title">Sunucu_Donanimı_Teklif_TechSource.pdf</div>
+                <div class="document-meta">📅 20 Aralık 2024 • 📦 1.2 MB • 👤 Satın Alma</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Teklif</span>
+                    <span class="tag ai-tag">AI: ₺350,000</span>
+                    <span class="tag ai-tag">AI: Dell R750</span>
+                </div>
+                <div class="access-badge access-public">🌐 Genel Erişim</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('Sunucu_Donanimı_Teklif_TechSource.pdf')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('Sunucu_Donanimı_Teklif_TechSource.pdf')">⬇️ İndir</button>
                 </div>
             </div>
 
-            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                <div style="font-size: 48px; margin-bottom: 12px;"><span class="icon icon-document" style="font-size: 48px;"></span></div>
-                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Sozlesme_SAP.pdf</div>
-                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">3.8 MB • 07.11.2025</div>
-                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                    <span style="padding: 2px 8px; background: #dbeafe; color: var(--info); border-radius: 12px; font-size: 10px; font-weight: 600;">Sözleşme</span>
-                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">BT</span>
+            <!-- Yazışma -->
+            <div class="document-card" data-category="yazisma">
+                <div class="document-icon" style="background: linear-gradient(135deg, #e0e7ff, #c7d2fe);">
+                    ✉️
+                </div>
+                <div class="document-title">Tedarikci_Gorusme_Notlari_15_01.docx</div>
+                <div class="document-meta">📅 15 Ocak 2025 • 📦 45 KB • 👤 Satın Alma</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Yazışma</span>
+                    <span class="tag ai-tag">AI: Tedarikçi</span>
+                    <span class="tag ai-tag">AI: Toplantı</span>
+                </div>
+                <div class="access-badge access-restricted">🔐 Departman Erişimi</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('Tedarikci_Gorusme_Notlari_15_01.docx')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('Tedarikci_Gorusme_Notlari_15_01.docx')">⬇️ İndir</button>
                 </div>
             </div>
 
-            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                <div style="font-size: 48px; margin-bottom: 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48"><path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 15H4V8h3v1c0 .55.45 1 1 1s1-.45 1-1V8h6v1c0 .55.45 1 1 1s1-.45 1-1V8h3v11z"/></svg></div>
-                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Teklif_AWS.pdf</div>
-                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">1.5 MB • 06.11.2025</div>
-                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                    <span style="padding: 2px 8px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 10px; font-weight: 600;">Teklif</span>
-                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">BT</span>
+            <!-- Rapor -->
+            <div class="document-card" data-category="rapor">
+                <div class="document-icon" style="background: linear-gradient(135deg, #fee2e2, #fecaca);">
+                    📊
+                </div>
+                <div class="document-title">Q4_Butce_Raporu_2024.xlsx</div>
+                <div class="document-meta">📅 31 Aralık 2024 • 📦 890 KB • 👤 Finans</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Rapor</span>
+                    <span class="tag ai-tag">AI: Bütçe</span>
+                    <span class="tag ai-tag">AI: Q4</span>
+                    <span class="tag">Maskelenmiş</span>
+                </div>
+                <div class="access-badge access-private">🔒 Gizli</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('Q4_Butce_Raporu_2024.xlsx')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('Q4_Butce_Raporu_2024.xlsx')">⬇️ İndir</button>
                 </div>
             </div>
 
-            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                <div style="font-size: 48px; margin-bottom: 12px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
-                <div style="font-weight: 600; margin-bottom: 4px; font-size: 14px;">Yazisma_Vergi_Dairesi.pdf</div>
-                <div style="font-size: 12px; color: var(--text-light); margin-bottom: 8px;">680 KB • 05.11.2025</div>
-                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                    <span style="padding: 2px 8px; background: #fee2e2; color: var(--danger); border-radius: 12px; font-size: 10px; font-weight: 600;">Yazışma</span>
-                    <span style="padding: 2px 8px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 10px; font-weight: 600;">Finans</span>
+            <!-- Fatura 2 -->
+            <div class="document-card" data-category="fatura">
+                <div class="document-icon" style="background: linear-gradient(135deg, #fef3c7, #fde68a);">
+                    🧾
+                </div>
+                <div class="document-title">CyberSec_Fatura_2025_01.pdf</div>
+                <div class="document-meta">📅 10 Ocak 2025 • 📦 1.8 MB • 👤 BT Departmanı</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Fatura</span>
+                    <span class="tag ai-tag">AI: Güvenlik</span>
+                    <span class="tag ai-tag">AI: ₺37,500</span>
+                    <span class="tag">OCR İşlendi</span>
+                    <span class="tag">Maskelenmiş</span>
+                </div>
+                <div class="access-badge access-restricted">🔐 Departman Erişimi</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('CyberSec_Fatura_2025_01.pdf')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('CyberSec_Fatura_2025_01.pdf')">⬇️ İndir</button>
+                </div>
+            </div>
+
+            <!-- Sözleşme 2 -->
+            <div class="document-card" data-category="sozlesme">
+                <div class="document-icon" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe);">
+                    📜
+                </div>
+                <div class="document-title">SAP_ERP_Bakim_Sozlesme.pdf</div>
+                <div class="document-meta">📅 1 Ağustos 2024 • 📦 4.2 MB • 👤 BT</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Sözleşme</span>
+                    <span class="tag ai-tag">AI: SAP</span>
+                    <span class="tag ai-tag">AI: 12 Ay</span>
+                    <span class="tag ai-tag">AI: ₺680,000</span>
+                    <span class="tag">Dijital İmzalı</span>
+                </div>
+                <div class="access-badge access-private">🔒 Gizli</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('SAP_ERP_Bakim_Sozlesme.pdf')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('SAP_ERP_Bakim_Sozlesme.pdf')">⬇️ İndir</button>
+                </div>
+            </div>
+
+            <!-- Teklif 2 -->
+            <div class="document-card" data-category="teklif">
+                <div class="document-icon" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0);">
+                    💼
+                </div>
+                <div class="document-title">Ofis_Malzeme_Teklif_OfficeSupply.pdf</div>
+                <div class="document-meta">📅 5 Ocak 2025 • 📦 650 KB • 👤 İdari İşler</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Teklif</span>
+                    <span class="tag ai-tag">AI: Ofis</span>
+                    <span class="tag ai-tag">AI: ₺15,400</span>
+                </div>
+                <div class="access-badge access-public">🌐 Genel Erişim</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('Ofis_Malzeme_Teklif_OfficeSupply.pdf')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('Ofis_Malzeme_Teklif_OfficeSupply.pdf')">⬇️ İndir</button>
+                </div>
+            </div>
+
+            <!-- Yazışma 2 -->
+            <div class="document-card" data-category="yazisma">
+                <div class="document-icon" style="background: linear-gradient(135deg, #e0e7ff, #c7d2fe);">
+                    ✉️
+                </div>
+                <div class="document-title">Yonetim_Kurulu_Karar_2024_12.pdf</div>
+                <div class="document-meta">📅 20 Aralık 2024 • 📦 320 KB • 👤 Yönetim</div>
+                <div class="document-tags">
+                    <span class="tag ai-tag">AI: Karar</span>
+                    <span class="tag ai-tag">AI: Yönetim Kurulu</span>
+                    <span class="tag">Dijital İmzalı</span>
+                </div>
+                <div class="access-badge access-private">🔒 Gizli</div>
+                <div class="document-actions">
+                    <button class="doc-btn" onclick="viewDocument('Yonetim_Kurulu_Karar_2024_12.pdf')">👁️ Görüntüle</button>
+                    <button class="doc-btn" onclick="downloadDocument('Yonetim_Kurulu_Karar_2024_12.pdf')">⬇️ İndir</button>
                 </div>
             </div>
         </div>
 
-        <div style="background: linear-gradient(135deg, #e0e7ff, #dbeafe); padding: 32px; border-radius: 16px; margin-top: 32px; text-align: center;">
-            <div style="font-size: 48px; margin-bottom: 16px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM9 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg></div>
-            <h3 style="margin-bottom: 12px; color: var(--dark);">AI Destekli Doküman İşleme</h3>
-            <p style="color: var(--text-light); margin-bottom: 20px;">NLP motoru ile otomatik etiketleme, anlamsal arama ve KVKK uyumlu veri maskeleme</p>
-            <div style="display: flex; justify-content: center; gap: 32px; margin-top: 24px;">
+        <!-- AI Processing Info -->
+        <div style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-left: 4px solid #10b981; padding: 20px; border-radius: 12px; margin-top: 24px;">
+            <h3 style="margin-bottom: 12px; color: var(--dark); display: flex; align-items: center; gap: 8px;">
+                🤖 AI Doküman İşleme Özellikleri
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; font-size: 14px;">
                 <div>
-                    <div style="font-size: 32px; font-weight: 700; color: var(--primary);">98%</div>
-                    <div style="font-size: 13px; color: var(--text-light);">OCR Doğruluk Oranı</div>
+                    <strong>📝 OCR & NLP Etiketleme</strong>
+                    <div style="color: var(--text-light); margin-top: 4px;">Dokümanlar otomatik okunur ve etiketlenir</div>
                 </div>
                 <div>
-                    <div style="font-size: 32px; font-weight: 700; color: var(--primary);">2.4s</div>
-                    <div style="font-size: 13px; color: var(--text-light);">Ortalama İşlem Süresi</div>
+                    <strong>🔍 Anlamsal Arama</strong>
+                    <div style="color: var(--text-light); margin-top: 4px;">Doğal dilde arama yapabilirsiniz</div>
                 </div>
                 <div>
-                    <div style="font-size: 32px; font-weight: 700; color: var(--primary);">100%</div>
-                    <div style="font-size: 13px; color: var(--text-light);">KVKK Uyumlu</div>
+                    <strong>🔒 KVKK Veri Maskeleme</strong>
+                    <div style="color: var(--text-light); margin-top: 4px;">Kişisel veriler otomatik maskelenir</div>
+                </div>
+                <div>
+                    <strong>✍️ Dijital İmza</strong>
+                    <div style="color: var(--text-light); margin-top: 4px;">e-imza ve mobil imza desteği</div>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Document Detail Modal -->
+    <div class="modal detail-modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="detailModalTitle" style="font-weight: 700; font-size: 20px;">Doküman Detayları</h3>
+                <button class="modal-close" onclick="closeDetailModal()">×</button>
+            </div>
+            <div class="modal-body" id="detailModalBody">
+                <!-- Content will be dynamically filled -->
+            </div>
+            <div style="padding: 24px; border-top: 1px solid var(--border); display: flex; gap: 12px; justify-content: flex-end;">
+                <button class="btn-secondary" onclick="closeDetailModal()">Kapat</button>
+                <button class="btn-primary" onclick="downloadCurrentDocument()">⬇️ İndir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="font-weight: 700; font-size: 20px;">Doküman Yükle</h3>
+                <button class="modal-close" onclick="closeUploadModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Doküman Kategorisi *</label>
+                    <select class="form-select" id="docCategory">
+                        <option value="">Kategori seçin</option>
+                        <option value="fatura">🧾 Fatura</option>
+                        <option value="sozlesme">📜 Sözleşme</option>
+                        <option value="teklif">💼 Teklif</option>
+                        <option value="yazisma">✉️ Yazışma</option>
+                        <option value="rapor">📊 Rapor</option>
+                        <option value="diger">📁 Diğer</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Erişim Seviyesi *</label>
+                    <select class="form-select" id="accessLevel">
+                        <option value="public">🌐 Genel Erişim (Tüm çalışanlar)</option>
+                        <option value="department">🔐 Departman Erişimi (Sadece departman)</option>
+                        <option value="private">🔒 Gizli (Sadece yöneticiler)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Dosya</label>
+                    <div class="file-drop-zone" onclick="document.getElementById('fileUploadInput').click()">
+                        <div style="font-size: 48px; margin-bottom: 12px;">📤</div>
+                        <div style="font-weight: 600; margin-bottom: 8px;">Dosya yüklemek için tıklayın</div>
+                        <div style="font-size: 12px; color: var(--text-light);">
+                            PDF, Word, Excel, PowerPoint desteklenir<br>
+                            OCR ile otomatik veri çıkarımı • AI etiketleme • KVKK maskeleme
+                        </div>
+                    </div>
+                    <input type="file" id="fileUploadInput" style="display: none;" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" onchange="handleFileUpload(this)">
+                    <div id="uploadedFileName" style="margin-top: 12px; font-size: 13px; color: var(--primary);"></div>
+                </div>
+
+                <div style="background: var(--primary-light); padding: 12px; border-radius: 8px; border-left: 3px solid var(--primary); font-size: 13px; margin-top: 16px;">
+                    <strong>✓ Otomatik İşlemler:</strong>
+                    <div style="margin-top: 8px; color: var(--text);">
+                        • OCR ile metin çıkarımı<br>
+                        • NLP ile otomatik etiketleme<br>
+                        • Kişisel veri tespiti ve maskeleme<br>
+                        • Dijital imza doğrulama (varsa)
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 24px; border-top: 1px solid var(--border); display: flex; gap: 12px; justify-content: flex-end;">
+                <button class="btn-secondary" onclick="closeUploadModal()">İptal</button>
+                <button class="btn-primary" onclick="submitUpload()">Yükle ve İşle</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Mobile menu functionality
+        // Mobile menu
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -212,6 +877,560 @@
 
         mobileMenuToggle.addEventListener('click', toggleMobileMenu);
         sidebarOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Notification badge animation
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            setInterval(() => {
+                notificationBadge.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    notificationBadge.style.transform = 'scale(1)';
+                }, 300);
+            }, 3000);
+        }
+
+        // Notification button click handler
+        document.querySelector('.notification-btn').addEventListener('click', function() {
+            alert('🔔 BİLDİRİMLER\n\n' +
+                  '• 156 doküman AI ile etiketlendi\n' +
+                  '• 5 yeni fatura OCR ile işlendi\n' +
+                  '• 347 kişisel veri maskelendi\n' +
+                  '• NLP anlamsal arama güncellendi\n' +
+                  '• KVKK uyumlu veri maskeleme aktif');
+        });
+
+        // Role selector
+        function toggleRoleDropdown() {
+            document.getElementById('roleDropdown').classList.toggle('active');
+        }
+
+        function selectRole(role) {
+            const roleTexts = {
+                'employee': '👤 Çalışan',
+                'manager': '👨‍💼 Departman Müdürü',
+                'director': '👔 Genel Müdür',
+                'board': '🎖️ Yönetim Kurulu'
+            };
+            document.getElementById('currentRole').textContent = roleTexts[role];
+            document.getElementById('roleDropdown').classList.remove('active');
+            document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            if (role !== 'employee') {
+                window.location.href = 'masraf-onay.html';
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.role-selector')) {
+                document.getElementById('roleDropdown').classList.remove('active');
+            }
+        });
+
+        // Category filtering
+        function filterCategory(category) {
+            const cards = document.querySelectorAll('.document-card');
+            const tabs = document.querySelectorAll('.category-tab');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            if (category === 'all') {
+                cards.forEach(card => card.style.display = 'block');
+            } else {
+                cards.forEach(card => {
+                    if (card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Semantic search
+        function performSemanticSearch(query) {
+            const suggestions = document.getElementById('searchSuggestions');
+            const suggestionText = document.getElementById('suggestionText');
+
+            if (query.length > 3) {
+                suggestions.style.display = 'block';
+                // Simulate NLP processing
+                const nlpResults = [
+                    '"fatura" kelimesi tespit edildi → Fatura kategorisinde arama',
+                    '"microsoft" kelimesi tespit edildi → Microsoft ile ilgili dokümanlar',
+                    'Tarih aralığı: "geçen ay" → Aralık 2024 - Ocak 2025',
+                    '"sözleşme" kelimesi tespit edildi → Sözleşme kategorisinde arama',
+                    '"bütçe aşımı" kelimesi tespit edildi → Finans raporlarında arama'
+                ];
+                suggestionText.textContent = nlpResults[Math.floor(Math.random() * nlpResults.length)];
+            } else {
+                suggestions.style.display = 'none';
+            }
+        }
+
+        // Upload modal
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.add('active');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+            document.getElementById('fileUploadInput').value = '';
+            document.getElementById('uploadedFileName').textContent = '';
+        }
+
+        function handleFileUpload(input) {
+            if (input.files && input.files[0]) {
+                const fileName = input.files[0].name;
+                const fileSize = (input.files[0].size / 1024 / 1024).toFixed(2);
+                document.getElementById('uploadedFileName').innerHTML =
+                    `✓ Seçildi: <strong>${fileName}</strong> (${fileSize} MB)`;
+            }
+        }
+
+        function submitUpload() {
+            const category = document.getElementById('docCategory').value;
+            const accessLevel = document.getElementById('accessLevel').value;
+            const fileInput = document.getElementById('fileUploadInput');
+
+            if (!category) {
+                alert('⚠️ Lütfen kategori seçin');
+                return;
+            }
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('⚠️ Lütfen dosya seçin');
+                return;
+            }
+
+            const fileName = fileInput.files[0].name;
+
+            alert('✓ Doküman yükleme başlatıldı!\n\n' +
+                  'Dosya: ' + fileName + '\n' +
+                  'Kategori: ' + document.getElementById('docCategory').options[document.getElementById('docCategory').selectedIndex].text + '\n' +
+                  'Erişim: ' + document.getElementById('accessLevel').options[document.getElementById('accessLevel').selectedIndex].text + '\n\n' +
+                  '🤖 AI İŞLEMLER:\n' +
+                  '─────────────────────\n' +
+                  '✓ OCR metin çıkarımı başladı\n' +
+                  '✓ NLP etiketleme yapılıyor\n' +
+                  '✓ Kişisel veri tespiti yapılıyor\n' +
+                  '✓ KVKK maskeleme uygulanıyor\n' +
+                  '✓ Dijital imza kontrolü yapılıyor\n\n' +
+                  'Doküman arşive eklendi!');
+
+            closeUploadModal();
+        }
+
+        // Document data
+        const documentData = {
+            'Microsoft_Fatura_2025_01.pdf': {
+                name: 'Microsoft_Fatura_2025_01.pdf',
+                category: '🧾 Fatura',
+                size: '2.4 MB',
+                date: '15 Ocak 2025',
+                department: 'Finans Departmanı',
+                uploadedBy: 'Ayşe Yılmaz',
+                access: '🔐 Departman Erişimi',
+                tags: ['Fatura', 'Microsoft', 'Yazılım Lisansı'],
+                description: 'Microsoft 365 Enterprise lisans yenileme faturası. Yıllık lisans bedeli ödeme makbuzu.',
+                invoiceNo: 'INV-2025-12456',
+                vendor: 'Microsoft Türkiye A.Ş.',
+                amount: '₺1,250,000',
+                taxNo: '1234567890',
+                iban: 'TR** **** **** **** ***1234 (Maskelenmiş)',
+                notes: 'KVKK uyumlu veri maskeleme uygulandı. TC Kimlik ve IBAN bilgileri güvenli şekilde saklanıyor.'
+            },
+            'AWS_Hosting_Sozlesme_2023.pdf': {
+                name: 'AWS_Hosting_Sozlesme_2023.pdf',
+                category: '📜 Sözleşme',
+                size: '5.8 MB',
+                date: '10 Ocak 2023',
+                department: 'BT Departmanı',
+                uploadedBy: 'Mehmet Kaya',
+                access: '🔒 Gizli',
+                tags: ['Sözleşme', 'Cloud', 'AWS', '36 Ay'],
+                description: 'Amazon Web Services cloud hosting hizmet sözleşmesi. 36 aylık süre ile yapılan hosting anlaşması.',
+                contractNo: 'SOZ-2023-4567',
+                vendor: 'Amazon Web Services',
+                amount: '₺850,000/yıl',
+                duration: '36 Ay',
+                startDate: '1 Şubat 2023',
+                endDate: '31 Ocak 2026',
+                notes: 'Dijital imza ile onaylanmış sözleşme. Otomatik yenileme maddesi içermektedir.'
+            },
+            'Sunucu_Donanimı_Teklif_TechSource.pdf': {
+                name: 'Sunucu_Donanimı_Teklif_TechSource.pdf',
+                category: '💼 Teklif',
+                size: '1.2 MB',
+                date: '20 Aralık 2024',
+                department: 'Satın Alma',
+                uploadedBy: 'Fatma Öztürk',
+                access: '🌐 Genel Erişim',
+                tags: ['Teklif', 'Donanım', 'Dell R750', '₺350,000'],
+                description: 'Dell PowerEdge R750 sunucu alımı için TechSource firmasından alınan teklif.',
+                offerNo: 'TEK-2024-8901',
+                vendor: 'TechSource A.Ş.',
+                amount: '₺350,000',
+                validUntil: '31 Ocak 2025',
+                items: 'Dell PowerEdge R750 x2, 64GB RAM, 4TB SSD',
+                notes: 'Geçerlilik süresi: 31 Ocak 2025. KDV dahil fiyat.'
+            },
+            'CyberSec_Fatura_2025_01.pdf': {
+                name: 'CyberSec_Fatura_2025_01.pdf',
+                category: '🧾 Fatura',
+                size: '1.8 MB',
+                date: '10 Ocak 2025',
+                department: 'BT Departmanı',
+                uploadedBy: 'Ali Demir',
+                access: '🔐 Departman Erişimi',
+                tags: ['Fatura', 'Güvenlik', 'Siber Güvenlik', '₺37,500'],
+                description: 'CyberSec Turkey siber güvenlik hizmet faturası. Aylık periyodik ödeme.',
+                invoiceNo: 'INV-2025-23789',
+                vendor: 'CyberSec Turkey A.Ş.',
+                amount: '₺37,500',
+                taxNo: '9876543210',
+                iban: 'TR** **** **** **** ***5678 (Maskelenmiş)',
+                notes: 'OCR ile işlenmiş ve KVKK uyumlu maskeleme yapılmıştır.'
+            },
+            'SAP_ERP_Bakim_Sozlesme.pdf': {
+                name: 'SAP_ERP_Bakim_Sozlesme.pdf',
+                category: '📜 Sözleşme',
+                size: '4.2 MB',
+                date: '1 Ağustos 2024',
+                department: 'BT Departmanı',
+                uploadedBy: 'Mehmet Kaya',
+                access: '🔒 Gizli',
+                tags: ['Sözleşme', 'SAP', 'ERP', '12 Ay', '₺680,000'],
+                description: 'SAP ERP sisteminin bakım ve destek sözleşmesi. Yıllık bakım hizmeti.',
+                contractNo: 'SOZ-2024-7890',
+                vendor: 'SAP Turkey A.Ş.',
+                amount: '₺680,000/yıl',
+                duration: '12 Ay',
+                startDate: '1 Ağustos 2024',
+                endDate: '31 Temmuz 2025',
+                notes: 'Dijital imza ile onaylanmış. Yıllık yenileme seçeneği mevcut.'
+            },
+            'Ofis_Malzeme_Teklif_OfficeSupply.pdf': {
+                name: 'Ofis_Malzeme_Teklif_OfficeSupply.pdf',
+                category: '💼 Teklif',
+                size: '650 KB',
+                date: '5 Ocak 2025',
+                department: 'İdari İşler',
+                uploadedBy: 'Zeynep Aydın',
+                access: '🌐 Genel Erişim',
+                tags: ['Teklif', 'Ofis', 'Kırtasiye', '₺15,400'],
+                description: 'Ofis malzemeleri ve kırtasiye ürünleri toplu alım teklifi.',
+                offerNo: 'TEK-2025-1234',
+                vendor: 'OfficeSupply Pro',
+                amount: '₺15,400',
+                validUntil: '31 Ocak 2025',
+                items: 'Kağıt, kalem, dosya, klasör ve diğer ofis malzemeleri',
+                notes: 'Toplu alım indirimi uygulanmıştır. KDV dahil fiyat.'
+            },
+            'Tedarikci_Gorusme_Notlari_15_01.docx': {
+                name: 'Tedarikci_Gorusme_Notlari_15_01.docx',
+                category: '✉️ Yazışma',
+                size: '45 KB',
+                date: '15 Ocak 2025',
+                department: 'Satın Alma',
+                uploadedBy: 'Fatma Öztürk',
+                access: '🔐 Departman Erişimi',
+                tags: ['Yazışma', 'Tedarikçi', 'Toplantı', 'TechSource'],
+                description: 'TechSource A.Ş. ile yapılan tedarikçi görüşme toplantı notları.',
+                meetingDate: '15 Ocak 2025',
+                participants: 'Fatma Öztürk, Mehmet Kaya, TechSource Temsilcisi',
+                topic: 'Sunucu alımı ve teknik destek görüşmesi',
+                notes: 'Toplantı notları departman içi erişime açıktır.'
+            },
+            'Q4_Butce_Raporu_2024.xlsx': {
+                name: 'Q4_Butce_Raporu_2024.xlsx',
+                category: '📊 Rapor',
+                size: '890 KB',
+                date: '31 Aralık 2024',
+                department: 'Finans',
+                uploadedBy: 'Ayşe Yılmaz',
+                access: '🔒 Gizli',
+                tags: ['Rapor', 'Bütçe', 'Q4', 'Finans', '2024'],
+                description: 'Q4 2024 dönem bütçe kullanım raporu ve yıl sonu analizi.',
+                reportPeriod: 'Q4 2024 (Ekim-Aralık)',
+                totalBudget: '₺2,450,000',
+                usedBudget: '₺2,187,000 (%89)',
+                remainingBudget: '₺263,000 (%11)',
+                notes: 'Maskelenmiş finansal veriler içerir. Yönetim kurulu erişimine açık.'
+            },
+            'Yonetim_Kurulu_Karar_2024_12.pdf': {
+                name: 'Yonetim_Kurulu_Karar_2024_12.pdf',
+                category: '✉️ Yazışma',
+                size: '320 KB',
+                date: '20 Aralık 2024',
+                department: 'Yönetim',
+                uploadedBy: 'Can Yılmaz',
+                access: '🔒 Gizli',
+                tags: ['Karar', 'Yönetim Kurulu', 'Resmi Belge'],
+                description: 'Aralık 2024 dönemi yönetim kurulu toplantı kararları.',
+                meetingDate: '20 Aralık 2024',
+                decisionNo: 'YK-2024-12-01',
+                topic: 'Bütçe artırımı ve tedarikçi değişikliği kararları',
+                notes: 'Dijital imza ile onaylanmış resmi belge. Yalnızca yönetim kurulu erişimine açık.'
+            }
+        };
+
+        let currentDocument = null;
+
+        // Document actions
+        function viewDocument(filename) {
+            currentDocument = filename;
+            const doc = documentData[filename];
+
+            if (!doc) {
+                alert('Doküman bilgisi bulunamadı.');
+                return;
+            }
+
+            document.getElementById('detailModalTitle').textContent = '📄 ' + doc.name;
+
+            let detailHTML = `
+                <div class="detail-section">
+                    <div class="detail-section-title">📋 Genel Bilgiler</div>
+                    <div class="detail-row">
+                        <div class="detail-label">Dosya Adı:</div>
+                        <div class="detail-value">${doc.name}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Kategori:</div>
+                        <div class="detail-value">${doc.category}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Boyut:</div>
+                        <div class="detail-value">${doc.size}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tarih:</div>
+                        <div class="detail-value">${doc.date}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Departman:</div>
+                        <div class="detail-value">${doc.department}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Yükleyen:</div>
+                        <div class="detail-value">${doc.uploadedBy}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Erişim Seviyesi:</div>
+                        <div class="detail-value">${doc.access}</div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-section-title">📝 Açıklama</div>
+                    <div style="padding: 12px; background: var(--bg); border-radius: 8px; font-size: 13px; line-height: 1.6;">
+                        ${doc.description}
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <div class="detail-section-title">🏷️ AI Etiketleri</div>
+                    <div class="tag-list">
+                        ${doc.tags.map(tag => `<span class="tag ai-tag">AI: ${tag}</span>`).join('')}
+                    </div>
+                </div>`;
+
+            // Add specific fields based on category
+            if (doc.invoiceNo) {
+                detailHTML += `
+                <div class="detail-section">
+                    <div class="detail-section-title">💰 Fatura Bilgileri</div>
+                    <div class="detail-row">
+                        <div class="detail-label">Fatura No:</div>
+                        <div class="detail-value">${doc.invoiceNo}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tedarikçi:</div>
+                        <div class="detail-value">${doc.vendor}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tutar:</div>
+                        <div class="detail-value" style="font-weight: 700; color: var(--primary);">${doc.amount}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Vergi No:</div>
+                        <div class="detail-value">${doc.taxNo}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">IBAN:</div>
+                        <div class="detail-value">${doc.iban}</div>
+                    </div>
+                </div>`;
+            }
+
+            if (doc.contractNo) {
+                detailHTML += `
+                <div class="detail-section">
+                    <div class="detail-section-title">📜 Sözleşme Bilgileri</div>
+                    <div class="detail-row">
+                        <div class="detail-label">Sözleşme No:</div>
+                        <div class="detail-value">${doc.contractNo}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tedarikçi:</div>
+                        <div class="detail-value">${doc.vendor}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tutar:</div>
+                        <div class="detail-value" style="font-weight: 700; color: var(--primary);">${doc.amount}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Süre:</div>
+                        <div class="detail-value">${doc.duration}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Başlangıç:</div>
+                        <div class="detail-value">${doc.startDate}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Bitiş:</div>
+                        <div class="detail-value">${doc.endDate}</div>
+                    </div>
+                </div>`;
+            }
+
+            if (doc.offerNo) {
+                detailHTML += `
+                <div class="detail-section">
+                    <div class="detail-section-title">💼 Teklif Bilgileri</div>
+                    <div class="detail-row">
+                        <div class="detail-label">Teklif No:</div>
+                        <div class="detail-value">${doc.offerNo}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tedarikçi:</div>
+                        <div class="detail-value">${doc.vendor}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Tutar:</div>
+                        <div class="detail-value" style="font-weight: 700; color: var(--primary);">${doc.amount}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Geçerlilik:</div>
+                        <div class="detail-value">${doc.validUntil}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Kalemler:</div>
+                        <div class="detail-value">${doc.items}</div>
+                    </div>
+                </div>`;
+            }
+
+            if (doc.meetingDate && doc.participants) {
+                detailHTML += `
+                <div class="detail-section">
+                    <div class="detail-section-title">✉️ Yazışma/Toplantı Bilgileri</div>
+                    <div class="detail-row">
+                        <div class="detail-label">Toplantı Tarihi:</div>
+                        <div class="detail-value">${doc.meetingDate}</div>
+                    </div>
+                    ${doc.decisionNo ? `<div class="detail-row">
+                        <div class="detail-label">Karar No:</div>
+                        <div class="detail-value">${doc.decisionNo}</div>
+                    </div>` : ''}
+                    <div class="detail-row">
+                        <div class="detail-label">Katılımcılar:</div>
+                        <div class="detail-value">${doc.participants}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Konu:</div>
+                        <div class="detail-value">${doc.topic}</div>
+                    </div>
+                </div>`;
+            }
+
+            if (doc.reportPeriod) {
+                detailHTML += `
+                <div class="detail-section">
+                    <div class="detail-section-title">📊 Rapor Bilgileri</div>
+                    <div class="detail-row">
+                        <div class="detail-label">Dönem:</div>
+                        <div class="detail-value">${doc.reportPeriod}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Toplam Bütçe:</div>
+                        <div class="detail-value" style="font-weight: 700;">${doc.totalBudget}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Kullanılan:</div>
+                        <div class="detail-value" style="color: var(--warning);">${doc.usedBudget}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Kalan:</div>
+                        <div class="detail-value" style="color: var(--success);">${doc.remainingBudget}</div>
+                    </div>
+                </div>`;
+            }
+
+            detailHTML += `
+                <div class="detail-section">
+                    <div class="detail-section-title">🔒 Güvenlik ve KVKK</div>
+                    <div style="padding: 12px; background: linear-gradient(135deg, #dbeafe, #bfdbfe); border-radius: 8px; font-size: 13px; line-height: 1.6;">
+                        ${doc.notes}
+                    </div>
+                    <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                        <div style="padding: 12px; background: #d1fae5; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; margin-bottom: 4px;">✓</div>
+                            <div style="font-size: 12px; font-weight: 600;">Erişim Onaylandı</div>
+                        </div>
+                        <div style="padding: 12px; background: #dbeafe; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; margin-bottom: 4px;">🔒</div>
+                            <div style="font-size: 12px; font-weight: 600;">Veriler Maskelendi</div>
+                        </div>
+                        <div style="padding: 12px; background: #fef3c7; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; margin-bottom: 4px;">📋</div>
+                            <div style="font-size: 12px; font-weight: 600;">Erişim Loglandı</div>
+                        </div>
+                    </div>
+                </div>`;
+
+            document.getElementById('detailModalBody').innerHTML = detailHTML;
+            document.getElementById('detailModal').classList.add('active');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.remove('active');
+            currentDocument = null;
+        }
+
+        function downloadCurrentDocument() {
+            if (currentDocument) {
+                downloadDocument(currentDocument);
+            }
+        }
+
+        function downloadDocument(filename) {
+            const doc = documentData[filename] || { name: filename };
+
+            alert('⬇️ DOKÜMAN İNDİRME\n\n' +
+                  'Dosya: ' + doc.name + '\n\n' +
+                  '🔒 GÜVENLİK:\n' +
+                  '✓ İndirme yetkisi doğrulandı\n' +
+                  '✓ İndirme işlemi log\'a kaydedildi\n' +
+                  '✓ Dijital filigran eklendi\n' +
+                  '✓ Kişisel veriler maskelenmiş\n\n' +
+                  'İndirme başlıyor...');
+        }
+
+        // Close modals on outside click
+        document.getElementById('uploadModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeUploadModal();
+            }
+        });
+
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDetailModal();
+            }
+        });
     </script>
 </body>
 </html>

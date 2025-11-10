@@ -7,6 +7,257 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
+    <style>
+        /* Role Selector */
+        .role-selector {
+            position: relative;
+            margin-right: 16px;
+        }
+
+        .role-badge {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .role-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .role-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 8px;
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .role-dropdown.active {
+            display: block;
+        }
+
+        .role-option {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-option:hover {
+            background: var(--bg);
+        }
+
+        .role-option.selected {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 3px solid var(--primary);
+        }
+
+        .role-option-icon {
+            font-size: 20px;
+        }
+
+        .role-option-text {
+            flex: 1;
+        }
+
+        .role-option-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--dark);
+        }
+
+        .role-option-desc {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--border);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .file-upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="topbar">
@@ -24,6 +275,42 @@
             </div>
         </div>
         <div class="topbar-right">
+            <div class="role-selector">
+                <button class="role-badge" id="roleButton" onclick="toggleRoleDropdown()">
+                    <span id="currentRole">👤 Çalışan</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+                <div class="role-dropdown" id="roleDropdown">
+                    <div class="role-option selected" onclick="selectRole('employee')">
+                        <div class="role-option-icon">👤</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Çalışan</div>
+                            <div class="role-option-desc">Talep oluşturma</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('manager')">
+                        <div class="role-option-icon">👨‍💼</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Departman Müdürü</div>
+                            <div class="role-option-desc">0-5,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('director')">
+                        <div class="role-option-icon">👔</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Genel Müdür</div>
+                            <div class="role-option-desc">5,001-25,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('board')">
+                        <div class="role-option-icon">🎖️</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Yönetim Kurulu</div>
+                            <div class="role-option-desc">25,000₺+ onay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button class="notification-btn"><span class="icon icon-bell"></span><span class="notification-badge"></span></button>
             <button class="user-menu"><span class="icon icon-user"></span></button>
         </div>
@@ -99,14 +386,14 @@
                 <div style="font-weight: 600; color: var(--dark); margin-bottom: 4px;">Yenileme Hatırlatması</div>
                 <div style="font-size: 14px; color: var(--text);">Microsoft 365 lisans sözleşmesi 15 gün içinde yenilenme tarihine ulaşıyor</div>
             </div>
-            <button style="padding: 8px 16px; background: white; border: 1px solid var(--warning); border-radius: 6px; font-weight: 600; cursor: pointer;">İncele</button>
+            <button onclick="window.location.href='sozlesme-detay.html?id=microsoft365'" style="padding: 8px 16px; background: white; border: 1px solid var(--warning); border-radius: 6px; font-weight: 600; cursor: pointer;">İncele</button>
         </div>
 
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
             <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h3 style="color: var(--dark);">Aktif Sözleşmeler</h3>
-                    <button style="padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    <button onclick="openContractModal()" style="padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         + Yeni Sözleşme
                     </button>
                 </div>
@@ -120,7 +407,8 @@
                             <div style="font-weight: 700; color: var(--dark);">₺1,250,000</div>
                             <div style="font-size: 11px; color: var(--text-light);">Yıllık</div>
                         </div>
-                        <div style="padding: 6px 12px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 12px; font-weight: 600;">15 gün</div>
+                        <div style="padding: 6px 12px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 12px; font-weight: 600; margin-right: 12px;">15 gün</div>
+                        <button onclick="window.location.href='sozlesme-detay.html?id=microsoft365'" style="padding: 8px 16px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Detay</button>
                     </div>
 
                     <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
@@ -132,7 +420,8 @@
                             <div style="font-weight: 700; color: var(--dark);">₺850,000</div>
                             <div style="font-size: 11px; color: var(--text-light);">Yıllık</div>
                         </div>
-                        <div style="padding: 6px 12px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 12px; font-weight: 600;">345 gün</div>
+                        <div style="padding: 6px 12px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 12px; font-weight: 600; margin-right: 12px;">345 gün</div>
+                        <button onclick="window.location.href='sozlesme-detay.html?id=aws'" style="padding: 8px 16px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Detay</button>
                     </div>
 
                     <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
@@ -144,7 +433,8 @@
                             <div style="font-weight: 700; color: var(--dark);">₺450,000</div>
                             <div style="font-size: 11px; color: var(--text-light);">Yıllık</div>
                         </div>
-                        <div style="padding: 6px 12px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 12px; font-weight: 600;">28 gün</div>
+                        <div style="padding: 6px 12px; background: #fef3c7; color: var(--warning); border-radius: 12px; font-size: 12px; font-weight: 600; margin-right: 12px;">28 gün</div>
+                        <button onclick="window.location.href='sozlesme-detay.html?id=cybersec'" style="padding: 8px 16px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Detay</button>
                     </div>
 
                     <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
@@ -156,7 +446,8 @@
                             <div style="font-weight: 700; color: var(--dark);">₺680,000</div>
                             <div style="font-size: 11px; color: var(--text-light);">Yıllık</div>
                         </div>
-                        <div style="padding: 6px 12px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 12px; font-weight: 600;">198 gün</div>
+                        <div style="padding: 6px 12px; background: #d1fae5; color: var(--success); border-radius: 12px; font-size: 12px; font-weight: 600; margin-right: 12px;">198 gün</div>
+                        <button onclick="window.location.href='sozlesme-detay.html?id=sap'" style="padding: 8px 16px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Detay</button>
                     </div>
                 </div>
             </div>
@@ -193,7 +484,179 @@
                 </div>
             </div>
         </div>
+
+        <!-- Yenileme Haritası -->
+        <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border); margin-top: 24px;">
+            <h3 style="color: var(--dark); margin-bottom: 20px;">📅 Yenileme Haritası (12 Ay)</h3>
+            <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Oca</div>
+                    <div style="height: 80px; background: #d1fae5; border-radius: 8px; position: relative; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 20px;">✓</span>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Şub</div>
+                    <div style="height: 80px; background: #fef3c7; border-radius: 8px; position: relative; cursor: pointer;" onclick="window.location.href='sozlesme-detay.html?id=microsoft365'">
+                        <div style="font-size: 10px; font-weight: 600; padding: 4px; text-align: center;">M365</div>
+                        <div style="font-size: 9px; padding: 2px 4px;">15 gün</div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Mar</div>
+                    <div style="height: 80px; background: #fef3c7; border-radius: 8px; position: relative; cursor: pointer;" onclick="window.location.href='sozlesme-detay.html?id=cybersec'">
+                        <div style="font-size: 10px; font-weight: 600; padding: 4px; text-align: center;">Cyber</div>
+                        <div style="font-size: 9px; padding: 2px 4px;">28 gün</div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Nis</div>
+                    <div style="height: 80px; background: #e5e7eb; border-radius: 8px;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">May</div>
+                    <div style="height: 80px; background: #e5e7eb; border-radius: 8px;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Haz</div>
+                    <div style="height: 80px; background: #e5e7eb; border-radius: 8px;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Tem</div>
+                    <div style="height: 80px; background: #e5e7eb; border-radius: 8px;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Ağu</div>
+                    <div style="height: 80px; background: #dbeafe; border-radius: 8px; position: relative; cursor: pointer;" onclick="window.location.href='sozlesme-detay.html?id=sap'">
+                        <div style="font-size: 10px; font-weight: 600; padding: 4px; text-align: center;">SAP</div>
+                        <div style="font-size: 9px; padding: 2px 4px;">198 gün</div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Eyl</div>
+                    <div style="height: 80px; background: #e5e7eb; border-radius: 8px;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Eki</div>
+                    <div style="height: 80px; background: #e5e7eb; border-radius: 8px;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Kas</div>
+                    <div style="height: 80px; background: #e5e7eb; border-radius: 8px;"></div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-light); margin-bottom: 8px;">Ara</div>
+                    <div style="height: 80px; background: #dbeafe; border-radius: 8px; position: relative; cursor: pointer;" onclick="window.location.href='sozlesme-detay.html?id=aws'">
+                        <div style="font-size: 10px; font-weight: 600; padding: 4px; text-align: center;">AWS</div>
+                        <div style="font-size: 9px; padding: 2px 4px;">345 gün</div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 24px; margin-top: 16px; font-size: 13px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 16px; height: 16px; background: #fef3c7; border-radius: 4px;"></div>
+                    <span>30 gün içinde</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 16px; height: 16px; background: #dbeafe; border-radius: 4px;"></div>
+                    <span>30+ gün</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 16px; height: 16px; background: #d1fae5; border-radius: 4px;"></div>
+                    <span>Yenilendi</span>
+                </div>
+            </div>
+        </div>
     </main>
+
+    <!-- New Contract Modal -->
+    <div class="modal" id="contractModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Yeni Sözleşme Ekle</h3>
+                <button class="modal-close" onclick="closeContractModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="contractForm">
+                    <div class="form-group">
+                        <label class="form-label">Sözleşme Adı *</label>
+                        <input type="text" class="form-input" id="contractName" placeholder="Ör: Microsoft 365 Enterprise Lisansı" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tedarikçi/Firma *</label>
+                        <input type="text" class="form-input" id="vendor" placeholder="Ör: Microsoft Türkiye" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Sözleşme Türü *</label>
+                            <select class="form-select" id="contractType" required>
+                                <option value="">Sözleşme türü seçin</option>
+                                <option value="software">Yazılım Lisansı</option>
+                                <option value="service">Hizmet Sözleşmesi</option>
+                                <option value="maintenance">Bakım ve Destek</option>
+                                <option value="cloud">Cloud Hizmetleri</option>
+                                <option value="consulting">Danışmanlık</option>
+                                <option value="subscription">Abonelik</option>
+                                <option value="other">Diğer</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Sözleşme Değeri (₺) *</label>
+                            <input type="number" class="form-input" id="contractValue" placeholder="0.00" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Başlangıç Tarihi *</label>
+                            <input type="date" class="form-input" id="startDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Bitiş Tarihi *</label>
+                            <input type="date" class="form-input" id="endDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Süre Tipi *</label>
+                        <select class="form-select" id="durationType" required>
+                            <option value="">Süre tipi seçin</option>
+                            <option value="12">12 Ay</option>
+                            <option value="24">24 Ay</option>
+                            <option value="36">36 Ay</option>
+                            <option value="custom">Özel</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Sözleşme Belgesi</label>
+                        <div class="file-upload" onclick="document.getElementById('contractFileInput').click()">
+                            <div class="file-upload-icon">📄</div>
+                            <div><strong>Sözleşme dosyası yüklemek için tıklayın</strong></div>
+                            <div style="font-size: 12px; color: var(--text-light); margin-top: 8px;">
+                                PDF desteklenir • OCR ile otomatik madde çıkarımı
+                            </div>
+                        </div>
+                        <input type="file" id="contractFileInput" style="display: none;" accept=".pdf">
+                        <div id="contractFileList" style="margin-top: 12px; font-size: 13px; color: var(--text);"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Notlar</label>
+                        <textarea class="form-textarea" id="contractNotes" placeholder="Sözleşme ile ilgili notlar..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeContractModal()">İptal</button>
+                <button class="btn btn-primary" onclick="submitContract()">Sözleşme Ekle</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Mobile menu functionality
@@ -210,6 +673,126 @@
 
         mobileMenuToggle.addEventListener('click', toggleMobileMenu);
         sidebarOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Notification badge animation
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            setInterval(() => {
+                notificationBadge.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    notificationBadge.style.transform = 'scale(1)';
+                }, 300);
+            }, 3000);
+        }
+
+        // Notification button click handler
+        document.querySelector('.notification-btn').addEventListener('click', function() {
+            alert('🔔 BİLDİRİMLER\n\n' +
+                  '• 3 sözleşme 30 gün içinde yenilenecek\n' +
+                  '• Microsoft 365 lisans sözleşmesi 15 gün\n' +
+                  '• Siber Güvenlik sözleşmesi 28 gün\n' +
+                  '• 2 compliance uyarısı\n' +
+                  '• AI sözleşme analizi tamamlandı');
+        });
+
+        // Role selector functions
+        function toggleRoleDropdown() {
+            document.getElementById('roleDropdown').classList.toggle('active');
+        }
+
+        function selectRole(role) {
+            const roleTexts = {
+                'employee': '👤 Çalışan',
+                'manager': '👨‍💼 Departman Müdürü',
+                'director': '👔 Genel Müdür',
+                'board': '🎖️ Yönetim Kurulu'
+            };
+            document.getElementById('currentRole').textContent = roleTexts[role];
+            document.getElementById('roleDropdown').classList.remove('active');
+            document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            if (role !== 'employee') {
+                window.location.href = 'masraf-onay.html';
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.role-selector')) {
+                document.getElementById('roleDropdown').classList.remove('active');
+            }
+        });
+
+        // Contract Modal Functions
+        function openContractModal() {
+            document.getElementById('contractModal').classList.add('active');
+        }
+
+        function closeContractModal() {
+            document.getElementById('contractModal').classList.remove('active');
+            document.getElementById('contractForm').reset();
+            document.getElementById('contractFileList').innerHTML = '';
+        }
+
+        function submitContract() {
+            const form = document.getElementById('contractForm');
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const contractNumber = 'SOZ-2025-' + Math.floor(Math.random() * 9000 + 1000);
+            const formData = {
+                contractNumber: contractNumber,
+                name: document.getElementById('contractName').value,
+                vendor: document.getElementById('vendor').value,
+                type: document.getElementById('contractType').value,
+                value: document.getElementById('contractValue').value,
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                durationType: document.getElementById('durationType').value,
+                notes: document.getElementById('contractNotes').value
+            };
+
+            console.log('Yeni Sözleşme:', formData);
+
+            alert('✓ Sözleşme başarıyla eklendi!\n\n' +
+                  'Sözleşme No: ' + contractNumber + '\n' +
+                  'Ad: ' + formData.name + '\n' +
+                  'Tedarikçi: ' + formData.vendor + '\n' +
+                  'Değer: ₺' + parseFloat(formData.value).toLocaleString('tr-TR') + '\n\n' +
+                  'OCR ile sözleşme maddeleri analiz ediliyor...\n' +
+                  'Compliance kontrolü yapılıyor...\n' +
+                  'Yenileme haritasına ekleniyor...');
+
+            closeContractModal();
+        }
+
+        // File upload handler for contract
+        document.getElementById('contractFileInput').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const fileList = document.getElementById('contractFileList');
+
+            if (files.length > 0) {
+                const file = files[0];
+                const size = (file.size / 1024).toFixed(1);
+
+                fileList.innerHTML = '<div style="padding: 12px; background: var(--primary-light); border-radius: 8px; border-left: 3px solid var(--primary);">' +
+                    '📄 ' + file.name + ' (' + size + ' KB)<br>' +
+                    '<span style="color: var(--primary); font-weight: 600; font-size: 12px; margin-top: 8px; display: inline-block;">✓ OCR ile sözleşme maddeleri otomatik çıkarılacak</span>' +
+                    '</div>';
+            } else {
+                fileList.innerHTML = '';
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('contractModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContractModal();
+            }
+        });
     </script>
 </body>
 </html>

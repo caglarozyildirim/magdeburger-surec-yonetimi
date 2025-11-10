@@ -534,6 +534,88 @@
             font-size: 14px;
             color: var(--text);
         }
+
+        /* Role Selector */
+        .role-selector {
+            position: relative;
+            margin-right: 16px;
+        }
+
+        .role-badge {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .role-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .role-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 8px;
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .role-dropdown.active {
+            display: block;
+        }
+
+        .role-option {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-option:hover {
+            background: var(--bg);
+        }
+
+        .role-option.selected {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 3px solid var(--primary);
+        }
+
+        .role-option-icon {
+            font-size: 20px;
+        }
+
+        .role-option-text {
+            flex: 1;
+        }
+
+        .role-option-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--dark);
+        }
+
+        .role-option-desc {
+            font-size: 11px;
+            color: var(--text-light);
+        }
     </style>
 </head>
 <body>
@@ -553,6 +635,42 @@
             </div>
         </div>
         <div class="topbar-right">
+            <div class="role-selector">
+                <button class="role-badge" id="roleButton" onclick="toggleRoleDropdown()">
+                    <span id="currentRole">👤 Çalışan</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+                <div class="role-dropdown" id="roleDropdown">
+                    <div class="role-option selected" onclick="selectRole('employee')">
+                        <div class="role-option-icon">👤</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Çalışan</div>
+                            <div class="role-option-desc">Talep oluşturma</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('manager')">
+                        <div class="role-option-icon">👨‍💼</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Departman Müdürü</div>
+                            <div class="role-option-desc">0-5,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('director')">
+                        <div class="role-option-icon">👔</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Genel Müdür</div>
+                            <div class="role-option-desc">5,001-25,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('board')">
+                        <div class="role-option-icon">🎖️</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Yönetim Kurulu</div>
+                            <div class="role-option-desc">25,000₺+ onay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button class="notification-btn">
                 <span class="icon icon-bell"></span>
                 <span class="notification-badge"></span>
@@ -885,13 +1003,53 @@
         });
 
         // Notification badge animation
-        setInterval(() => {
-            const badge = document.querySelector('.notification-badge');
-            badge.style.transform = 'scale(1.2)';
-            setTimeout(() => {
-                badge.style.transform = 'scale(1)';
-            }, 300);
-        }, 3000);
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            setInterval(() => {
+                notificationBadge.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    notificationBadge.style.transform = 'scale(1)';
+                }, 300);
+            }, 3000);
+        }
+
+        // Notification button click handler
+        document.querySelector('.notification-btn').addEventListener('click', function() {
+            alert('🔔 BİLDİRİMLER\n\n' +
+                  '• 3 adet yeni masraf talebi onay bekliyor\n' +
+                  '• Microsoft 365 sözleşmesi 15 gün içinde yenilenecek\n' +
+                  '• Bütçe aşım uyarısı: BT - Yazılım Lisans (92%)\n' +
+                  '• 2 adet tedarikçi performans raporu hazır\n' +
+                  '• Anomali tespit edildi: Yinelenen fatura');
+        });
+
+        // Role selector functions
+        function toggleRoleDropdown() {
+            document.getElementById('roleDropdown').classList.toggle('active');
+        }
+
+        function selectRole(role) {
+            const roleTexts = {
+                'employee': '👤 Çalışan',
+                'manager': '👨‍💼 Departman Müdürü',
+                'director': '👔 Genel Müdür',
+                'board': '🎖️ Yönetim Kurulu'
+            };
+            document.getElementById('currentRole').textContent = roleTexts[role];
+            document.getElementById('roleDropdown').classList.remove('active');
+            document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            if (role !== 'employee') {
+                window.location.href = 'masraf-onay.html';
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.role-selector')) {
+                document.getElementById('roleDropdown').classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>

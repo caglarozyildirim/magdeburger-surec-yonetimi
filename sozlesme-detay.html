@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sözleşme Detayı - Magdeburger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    <style>
+        /* Detail Page Specific Styles */
+        .detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .detail-header {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .detail-header.warning {
+            border-left: 4px solid var(--warning);
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        }
+
+        .detail-header.success {
+            border-left: 4px solid var(--success);
+            background: linear-gradient(135deg, #f0fdf4, #d1fae5);
+        }
+
+        .detail-title {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .detail-icon {
+            font-size: 48px;
+            flex-shrink: 0;
+        }
+
+        .detail-title-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 0 0 8px 0;
+        }
+
+        .detail-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .info-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+
+        .info-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            padding: 16px;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+
+        .info-label {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 16px;
+            margin-bottom: 16px;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid white;
+        }
+
+        .timeline-item.completed::before {
+            background: var(--success);
+        }
+
+        .timeline-item.pending::before {
+            background: var(--warning);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .detail-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .detail-table th {
+            text-align: left;
+            padding: 12px;
+            background: var(--bg);
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        .detail-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .detail-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge.warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .status-badge.success {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .status-badge.info {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        /* Role Selector */
+        .role-selector {
+            position: relative;
+            margin-right: 16px;
+        }
+
+        .role-badge {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .role-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+
+        .role-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 8px;
+            min-width: 220px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .role-dropdown.active {
+            display: block;
+        }
+
+        .role-option {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-option:hover {
+            background: var(--bg);
+        }
+
+        .role-option.selected {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 3px solid var(--primary);
+        }
+
+        .role-option-icon {
+            font-size: 20px;
+        }
+
+        .role-option-text {
+            flex: 1;
+        }
+
+        .role-option-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--dark);
+        }
+
+        .role-option-desc {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <span>Magdeburger Süreç Yönetimi</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="role-selector">
+                <button class="role-badge" id="roleButton" onclick="toggleRoleDropdown()">
+                    <span id="currentRole">👤 Çalışan</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+                <div class="role-dropdown" id="roleDropdown">
+                    <div class="role-option selected" onclick="selectRole('employee')">
+                        <div class="role-option-icon">👤</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Çalışan</div>
+                            <div class="role-option-desc">Talep oluşturma</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('manager')">
+                        <div class="role-option-icon">👨‍💼</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Departman Müdürü</div>
+                            <div class="role-option-desc">0-5,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('director')">
+                        <div class="role-option-icon">👔</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Genel Müdür</div>
+                            <div class="role-option-desc">5,001-25,000₺ onay</div>
+                        </div>
+                    </div>
+                    <div class="role-option" onclick="selectRole('board')">
+                        <div class="role-option-icon">🎖️</div>
+                        <div class="role-option-text">
+                            <div class="role-option-title">Yönetim Kurulu</div>
+                            <div class="role-option-desc">25,000₺+ onay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="notification-btn">
+                <span class="icon icon-bell"></span>
+                <span class="notification-badge"></span>
+            </button>
+            <button class="user-menu">
+                <span class="icon icon-user"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Ana Menü</div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="sidebar-link"><span class="icon icon-dashboard"></span>Dashboard</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Modüller</div>
+            <ul class="sidebar-menu">
+                <li><a href="satin-alma.html" class="sidebar-link"><span class="icon icon-cart"></span>Satın Alma<span class="badge badge-warning">12</span></a></li>
+                <li><a href="masraf-fatura.html" class="sidebar-link"><span class="icon icon-card"></span>Masraf & Fatura<span class="badge badge-danger">8</span></a></li>
+                <li><a href="butce.html" class="sidebar-link"><span class="icon icon-wallet"></span>Bütçe Yönetimi</a></li>
+                <li><a href="sozlesme.html" class="sidebar-link active"><span class="icon icon-document"></span>Sözleşme Yönetimi<span class="badge badge-warning">3</span></a></li>
+                <li><a href="dokuman.html" class="sidebar-link"><span class="icon icon-folder"></span>Doküman Yönetimi</a></li>
+                <li><a href="raporlar.html" class="sidebar-link"><span class="icon icon-chart"></span>Raporlar & Analitik</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="detail-container">
+            <button onclick="window.location.href='sozlesme.html'" style="padding: 8px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-weight: 600; cursor: pointer; margin-bottom: 16px;">
+                ← Geri Dön
+            </button>
+
+            <div id="detailContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Get contract ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const contractId = urlParams.get('id') || 'microsoft365';
+
+        // Load contract detail based on ID
+        function loadContractDetail(id) {
+            const detailContent = document.getElementById('detailContent');
+
+            switch(id) {
+                case 'microsoft365':
+                    detailContent.innerHTML = getMicrosoft365Detail();
+                    break;
+                case 'aws':
+                    detailContent.innerHTML = getAWSDetail();
+                    break;
+                case 'cybersec':
+                    detailContent.innerHTML = getCyberSecDetail();
+                    break;
+                case 'sap':
+                    detailContent.innerHTML = getSAPDetail();
+                    break;
+                default:
+                    detailContent.innerHTML = getMicrosoft365Detail();
+            }
+        }
+
+        function getMicrosoft365Detail() {
+            return `
+                <div class="detail-header warning">
+                    <div class="detail-title">
+                        <div class="detail-icon">⚠️</div>
+                        <div class="detail-title-text">
+                            <h1>Microsoft 365 Enterprise Lisansı</h1>
+                            <div class="detail-subtitle">
+                                <span>📋 SOZ-2024-M365</span>
+                                <span>•</span>
+                                <span>🏢 Microsoft Türkiye</span>
+                                <span>•</span>
+                                <span>⏰ 15 gün içinde yenilenecek</span>
+                                <span>•</span>
+                                <span>📅 Güncelleme: 2 saat önce</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Sözleşme Bilgileri</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Sözleşme Değeri</div>
+                            <div class="info-value">₺1,250,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Başlangıç Tarihi</div>
+                            <div class="info-value">01.02.2024</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Bitiş Tarihi</div>
+                            <div class="info-value">31.01.2025</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kalan Süre</div>
+                            <div class="info-value" style="color: var(--warning);">15 Gün</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Sözleşme Türü</div>
+                            <div class="info-value" style="font-size: 16px;">Yazılım Lisansı</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Otomatik Yenileme</div>
+                            <div class="info-value" style="font-size: 16px;">✓ Aktif</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📝 Sözleşme Maddeleri (AI Analizi)</div>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Madde</th>
+                                <th>Açıklama</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Madde 1</strong></td>
+                                <td>Lisans sayısı: 500 kullanıcı</td>
+                                <td><span class="status-badge success">Düşük</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Madde 2</strong></td>
+                                <td>Yenileme bildirimi: 30 gün önceden</td>
+                                <td><span class="status-badge warning">Dikkat</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Madde 3</strong></td>
+                                <td>İptal koşulu: 60 gün önceden yazılı bildirim</td>
+                                <td><span class="status-badge info">Normal</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Madde 4</strong></td>
+                                <td>Ödeme: Yıllık peşin ödeme</td>
+                                <td><span class="status-badge success">Düşük</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Madde 5</strong></td>
+                                <td>Destek: 7/24 teknik destek dahil</td>
+                                <td><span class="status-badge success">Düşük</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">✅ Yapılacak İşlemler</div>
+                    <div class="timeline">
+                        <div class="timeline-item pending">
+                            <strong>Acil: Yenileme Kararı</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                Sözleşmeyi yenilemek veya iptal etmek için karar verilmeli
+                            </div>
+                            <div style="font-size: 12px; margin-top: 8px;">
+                                <strong>Sorumlu:</strong> BT Departman Müdürü • <strong>Termin:</strong> 5 gün
+                            </div>
+                        </div>
+                        <div class="timeline-item pending">
+                            <strong>Bütçe Onayı</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                ₺1,250,000 bütçe tahsisi için Genel Müdür onayı gerekli
+                            </div>
+                            <div style="font-size: 12px; margin-top: 8px;">
+                                <strong>Sorumlu:</strong> Finans Direktörü • <strong>Termin:</strong> 7 gün
+                            </div>
+                        </div>
+                        <div class="timeline-item pending">
+                            <strong>Tedarikçi Görüşmesi</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                Yenileme koşulları ve fiyat müzakeresi
+                            </div>
+                            <div style="font-size: 12px; margin-top: 8px;">
+                                <strong>Sorumlu:</strong> Satın Alma Müdürü • <strong>Termin:</strong> 10 gün
+                            </div>
+                        </div>
+                        <div class="timeline-item pending">
+                            <strong>Sözleşme İmzalama</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                Yeni dönem sözleşmesinin imzalanması
+                            </div>
+                            <div style="font-size: 12px; margin-top: 8px;">
+                                <strong>Sorumlu:</strong> Genel Müdür • <strong>Termin:</strong> 15 gün
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">🔒 Compliance Durumu</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div style="padding: 16px; background: #d1fae5; border-radius: 8px; display: flex; align-items: center; gap: 12px;">
+                            <div style="font-size: 24px;">✓</div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark);">KVKK Uyumlu</div>
+                                <div style="font-size: 12px; color: var(--text-light);">Veri koruma maddeleri mevcut</div>
+                            </div>
+                        </div>
+                        <div style="padding: 16px; background: #d1fae5; border-radius: 8px; display: flex; align-items: center; gap: 12px;">
+                            <div style="font-size: 24px;">✓</div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--dark);">ISO 27001 Uyumlu</div>
+                                <div style="font-size: 12px; color: var(--text-light);">Bilgi güvenliği standartlarına uygun</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="alert('Yenileme süreci başlatılıyor...')">🔄 Yenileme Başlat</button>
+                    <button class="btn btn-secondary" onclick="alert('Sözleşme belgesi indiriliyor...')">📄 Belgeyi İndir</button>
+                    <button class="btn btn-secondary" onclick="alert('Tedarikçiye e-posta gönderiliyor...')">✉️ Tedarikçiye Ulaş</button>
+                </div>
+            `;
+        }
+
+        function getAWSDetail() {
+            return `
+                <div class="detail-header success">
+                    <div class="detail-title">
+                        <div class="detail-icon">✓</div>
+                        <div class="detail-title-text">
+                            <h1>AWS Cloud Services Hosting</h1>
+                            <div class="detail-subtitle">
+                                <span>📋 SOZ-2023-AWS</span>
+                                <span>•</span>
+                                <span>🏢 Amazon Web Services</span>
+                                <span>•</span>
+                                <span>⏰ 345 gün kaldı</span>
+                                <span>•</span>
+                                <span>📅 Güncelleme: 1 gün önce</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Sözleşme Bilgileri</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Sözleşme Değeri</div>
+                            <div class="info-value">₺850,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Başlangıç Tarihi</div>
+                            <div class="info-value">15.01.2023</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Bitiş Tarihi</div>
+                            <div class="info-value">14.01.2026</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kalan Süre</div>
+                            <div class="info-value" style="color: var(--success);">345 Gün</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Sözleşme Türü</div>
+                            <div class="info-value" style="font-size: 16px;">Cloud Hizmetleri</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Ödeme Planı</div>
+                            <div class="info-value" style="font-size: 16px;">Aylık</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📈 Kullanım İstatistikleri</div>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Hizmet</th>
+                                <th>Aylık Kullanım</th>
+                                <th>Maliyet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>EC2 Instances</td>
+                                <td>12 instance • 24/7</td>
+                                <td>₺35,000</td>
+                            </tr>
+                            <tr>
+                                <td>S3 Storage</td>
+                                <td>2.5 TB</td>
+                                <td>₺8,500</td>
+                            </tr>
+                            <tr>
+                                <td>RDS Database</td>
+                                <td>4 database</td>
+                                <td>₺18,000</td>
+                            </tr>
+                            <tr>
+                                <td>CloudFront CDN</td>
+                                <td>500 GB transfer</td>
+                                <td>₺5,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">💡 Optimizasyon Önerileri</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="padding: 16px; background: #e0f2fe; border-radius: 8px; border-left: 3px solid var(--primary);">
+                            <strong>Reserved Instances</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                3 yıllık Reserved Instance alımı ile %30 tasarruf (≈₺126,000/yıl)
+                            </div>
+                        </div>
+                        <div style="padding: 16px; background: #e0f2fe; border-radius: 8px; border-left: 3px solid var(--primary);">
+                            <strong>S3 Lifecycle Policy</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                Eski verileri Glacier'a taşıyarak %60 depolama maliyeti tasarrufu
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="alert('Sözleşme belgesi indiriliyor...')">📄 Belgeyi İndir</button>
+                    <button class="btn btn-secondary" onclick="alert('AWS hesap yöneticisine ulaşılıyor...')">✉️ Hesap Yöneticisine Ulaş</button>
+                    <button class="btn btn-secondary" onclick="alert('Maliyet raporu oluşturuluyor...')">📊 Maliyet Raporu</button>
+                </div>
+            `;
+        }
+
+        function getCyberSecDetail() {
+            return `
+                <div class="detail-header warning">
+                    <div class="detail-title">
+                        <div class="detail-icon">⚠️</div>
+                        <div class="detail-title-text">
+                            <h1>Siber Güvenlik Hizmet Sözleşmesi</h1>
+                            <div class="detail-subtitle">
+                                <span>📋 SOZ-2024-CYB</span>
+                                <span>•</span>
+                                <span>🏢 CyberSec Turkey</span>
+                                <span>•</span>
+                                <span>⏰ 28 gün içinde yenilenecek</span>
+                                <span>•</span>
+                                <span>📅 Güncelleme: 5 saat önce</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Sözleşme Bilgileri</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Sözleşme Değeri</div>
+                            <div class="info-value">₺450,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Başlangıç Tarihi</div>
+                            <div class="info-value">01.03.2023</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Bitiş Tarihi</div>
+                            <div class="info-value">28.02.2025</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kalan Süre</div>
+                            <div class="info-value" style="color: var(--warning);">28 Gün</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Sözleşme Türü</div>
+                            <div class="info-value" style="font-size: 16px;">Hizmet Sözleşmesi</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">SLA Oranı</div>
+                            <div class="info-value" style="font-size: 16px;">99.9%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">🛡️ Kapsanan Hizmetler</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <strong>✓ Firewall Yönetimi</strong>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <strong>✓ IDS/IPS Monitoring</strong>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <strong>✓ SIEM Analizi</strong>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <strong>✓ Penetration Testing</strong>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <strong>✓ SOC Hizmetleri</strong>
+                        </div>
+                        <div style="padding: 12px; background: var(--bg); border-radius: 8px;">
+                            <strong>✓ Incident Response</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📈 Performans Metrikleri (2024)</div>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Metrik</th>
+                                <th>Hedef</th>
+                                <th>Gerçekleşen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SLA Uptime</td>
+                                <td>99.9%</td>
+                                <td><span class="status-badge success">99.95%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Incident Response Time</td>
+                                <td>&lt; 30 dk</td>
+                                <td><span class="status-badge success">18 dk</span></td>
+                            </tr>
+                            <tr>
+                                <td>Tespit Edilen Tehditler</td>
+                                <td>-</td>
+                                <td><span class="status-badge info">247 adet</span></td>
+                            </tr>
+                            <tr>
+                                <td>Başarılı Engelleme</td>
+                                <td>&gt; 95%</td>
+                                <td><span class="status-badge success">98.8%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="alert('Yenileme süreci başlatılıyor...')">🔄 Yenileme Başlat</button>
+                    <button class="btn btn-secondary" onclick="alert('Sözleşme belgesi indiriliyor...')">📄 Belgeyi İndir</button>
+                    <button class="btn btn-secondary" onclick="alert('Güvenlik raporu oluşturuluyor...')">🛡️ Güvenlik Raporu</button>
+                </div>
+            `;
+        }
+
+        function getSAPDetail() {
+            return `
+                <div class="detail-header success">
+                    <div class="detail-title">
+                        <div class="detail-icon">✓</div>
+                        <div class="detail-title-text">
+                            <h1>SAP ERP Bakım ve Destek</h1>
+                            <div class="detail-subtitle">
+                                <span>📋 SOZ-2024-SAP</span>
+                                <span>•</span>
+                                <span>🏢 SAP Turkey</span>
+                                <span>•</span>
+                                <span>⏰ 198 gün kaldı</span>
+                                <span>•</span>
+                                <span>📅 Güncelleme: 1 gün önce</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Sözleşme Bilgileri</div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Sözleşme Değeri</div>
+                            <div class="info-value">₺680,000</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Başlangıç Tarihi</div>
+                            <div class="info-value">01.08.2024</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Bitiş Tarihi</div>
+                            <div class="info-value">31.07.2025</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Kalan Süre</div>
+                            <div class="info-value" style="color: var(--success);">198 Gün</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Sözleşme Türü</div>
+                            <div class="info-value" style="font-size: 16px;">Bakım & Destek</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Destek Seviyesi</div>
+                            <div class="info-value" style="font-size: 16px;">Premium</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">🔧 Kapsam</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="padding: 16px; background: var(--bg); border-radius: 8px;">
+                            <strong>SAP ECC 6.0 Bakım ve Destek</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                7/24 teknik destek, patch yönetimi, performans optimizasyonu
+                            </div>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg); border-radius: 8px;">
+                            <strong>SAP S/4HANA Migration Danışmanlığı</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                2025 Q3 için planlanan S/4HANA geçişi için 100 saat danışmanlık
+                            </div>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg); border-radius: 8px;">
+                            <strong>Entegrasyon Desteği</strong>
+                            <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">
+                                3. parti sistemlerle entegrasyon desteği ve API yönetimi
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-title">📊 Destek Kullanımı (Son 6 Ay)</div>
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Kategori</th>
+                                <th>Ticket Sayısı</th>
+                                <th>Ort. Çözüm Süresi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Kritik (P1)</td>
+                                <td>8</td>
+                                <td>2.4 saat</td>
+                            </tr>
+                            <tr>
+                                <td>Yüksek (P2)</td>
+                                <td>23</td>
+                                <td>8 saat</td>
+                            </tr>
+                            <tr>
+                                <td>Normal (P3)</td>
+                                <td>145</td>
+                                <td>24 saat</td>
+                            </tr>
+                            <tr>
+                                <td>Düşük (P4)</td>
+                                <td>67</td>
+                                <td>3 gün</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="alert('Sözleşme belgesi indiriliyor...')">📄 Belgeyi İndir</button>
+                    <button class="btn btn-secondary" onclick="alert('SAP danışmanına ulaşılıyor...')">✉️ Danışmana Ulaş</button>
+                    <button class="btn btn-secondary" onclick="alert('Kullanım raporu oluşturuluyor...')">📊 Kullanım Raporu</button>
+                </div>
+            `;
+        }
+
+        // Load detail on page load
+        loadContractDetail(contractId);
+
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleMobileMenu() {
+            mobileMenuToggle.classList.toggle('active');
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        sidebarOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Notification badge animation
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            setInterval(() => {
+                notificationBadge.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    notificationBadge.style.transform = 'scale(1)';
+                }, 300);
+            }, 3000);
+        }
+
+        // Notification button click handler
+        document.querySelector('.notification-btn').addEventListener('click', function() {
+            alert('🔔 BİLDİRİMLER\n\n' +
+                  '• 3 sözleşme 30 gün içinde yenilenecek\n' +
+                  '• Microsoft 365 lisans sözleşmesi 15 gün\n' +
+                  '• Siber Güvenlik sözleşmesi 28 gün\n' +
+                  '• 2 compliance uyarısı\n' +
+                  '• AI sözleşme analizi tamamlandı');
+        });
+
+        // Role selector functions
+        function toggleRoleDropdown() {
+            document.getElementById('roleDropdown').classList.toggle('active');
+        }
+
+        function selectRole(role) {
+            const roleTexts = {
+                'employee': '👤 Çalışan',
+                'manager': '👨‍💼 Departman Müdürü',
+                'director': '👔 Genel Müdür',
+                'board': '🎖️ Yönetim Kurulu'
+            };
+            document.getElementById('currentRole').textContent = roleTexts[role];
+            document.getElementById('roleDropdown').classList.remove('active');
+            document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            if (role !== 'employee') {
+                window.location.href = 'masraf-onay.html';
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.role-selector')) {
+                document.getElementById('roleDropdown').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
